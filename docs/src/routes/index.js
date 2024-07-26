@@ -24,7 +24,7 @@ export const constantRoutes = [
 	}
 ]
 const router = createRouter({
-	history: createWebHistory(),
+	history: createWebHistory('/origin-oxr/'),
 	routes: constantRoutes
 })
 
