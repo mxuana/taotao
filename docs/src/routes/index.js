@@ -15,7 +15,7 @@ export const constantRoutes = [
 	{
 		name: 'Home',
 		path: '/home',
-		component: () => import('/src/views/home/index.vue'),
+		component: () => import('/origin-oxr/src/views/home/index.vue'),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
@@ -25,7 +25,7 @@ export const constantRoutes = [
 	{
 		name: 'Home1',
 		path: '/home1',
-		component: () => import('../views/home/index.vue'),
+		component: () => import('/origin-oxr/src/views/home/index.vue'),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
