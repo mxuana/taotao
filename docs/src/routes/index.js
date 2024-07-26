@@ -15,7 +15,7 @@ export const constantRoutes = [
 	{
 		name: 'Home',
 		path: '/home',
-		component: defineAsyncComponent(import('/origin-oxr/src/views/home/index.vue')),
+		component: Vue.defineAsyncComponent(import('/origin-oxr/src/views/home/index.vue')),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
