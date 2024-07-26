@@ -1,4 +1,3 @@
-import { defineAsyncComponent } from 'vue'
 const { createRouter, createWebHistory } = window['VueRouter']
 
 // static
@@ -10,13 +9,13 @@ export const constantRoutes = [
 	},
 	{
 		path: '/404',
-		component: defineAsyncComponent(() => import('./src/views/error/404.vue')),
+		component: () => import('/origin-oxr/src/views/error/404.vue'),
 		meta: { hidden: true }
 	},
 	{
 		name: 'Home',
 		path: '/home',
-		component: () => defineAsyncComponent(import('/src/views/home/index.vue')),
+		component: () => import('/src/views/home/index.vue'),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
@@ -26,7 +25,7 @@ export const constantRoutes = [
 	{
 		name: 'Home1',
 		path: '/home1',
-		component: () => defineAsyncComponent(import('../views/home/index.vue')),
+		component: () => import('../views/home/index.vue'),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
