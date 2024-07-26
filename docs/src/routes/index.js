@@ -1,4 +1,4 @@
-const { createRouter, createWebHistory } = window['VueRouter']
+const { createRouter, createWebHashHistory } = window['VueRouter']
 
 // static
 export const constantRoutes = [
@@ -34,7 +34,7 @@ export const constantRoutes = [
 	}
 ]
 const router = createRouter({
-	history: createWebHistory('/origin-oxr/'),
+	history: createWebHashHistory(),
 	routes: constantRoutes
 })
 window.router = router
