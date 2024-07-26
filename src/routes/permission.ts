@@ -1,10 +1,10 @@
 import NProgress from 'nprogress'
 NProgress.configure({ showSpinner: false })
 import router from './index'
-// import settings from '@/layout/settings'
+import settings from '@/settings'
 // import { getToken } from '@/utils'
 // import { useUserStore } from '@/store'
-const resolveTitle = (ptitle: string) => (ptitle ? `${ptitle} - {settings.title}` : `{settings.title}`)
+const resolveTitle = (ptitle: string) => (ptitle ? `${ptitle} - ${settings.title}` : `${settings.title}`)
 
 router.beforeEach((to, _from, next) => {
 	document.title = resolveTitle((to.meta.title as string) || '')

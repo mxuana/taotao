@@ -10,7 +10,7 @@ import VueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	base: './',
+	base: process.env.VITE_PUBLIC_PATH,
 	server: {
 		port: 3000
 		// host: '0.0.0.0',
