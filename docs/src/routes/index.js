@@ -9,13 +9,13 @@ export const constantRoutes = [
 	},
 	{
 		path: '/404',
-		component: Vue.defineAsyncComponent(() => import('./origin-oxr/src/views/error/404.vue')),
+		component: Vue.defineAsyncComponent(() => import('../views/error/404.vue')),
 		meta: { hidden: true }
 	},
 	{
 		name: 'Home',
 		path: '/home',
-		component: Vue.defineAsyncComponent(import('./origin-oxr/src/views/home/index.vue')),
+		component: Vue.defineAsyncComponent(() => import('/origin-oxr/src/views/home/index.vue')),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
