@@ -16,13 +16,13 @@
 		<script src="/origin-oxr/plugins/vue-router@4.4.0/vue-router.global.min.js"></script>
 		<script type="module" src="/origin-oxr/utils/loader.js"></script>
 		<script type="module" src="/origin-oxr/utils/index.js"></script>
+		<script type="module" src="/origin-oxr/src/routes/index.js"></script>
 	</head>
 	<body>
 		<div id="app"></div>
 	</body>
 	<script type="module">
 		const { loadModule } = window['vue3-sfc-loader']
-		import router from '/origin-oxr/src/routes/index.js'
 		console.log(router)
 		window.appVue = Vue.createApp(
 			Vue.defineAsyncComponent(() => loadModule('/origin-oxr/src/App.vue', loaderVueOptions))

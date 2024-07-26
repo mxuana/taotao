@@ -28,5 +28,5 @@ const router = createRouter({
 	history: createWebHistory('/origin-oxr/'),
 	routes: constantRoutes
 })
-
+window.router = router
 export default router
