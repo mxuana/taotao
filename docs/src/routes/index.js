@@ -1,6 +1,5 @@
+import { defineAsyncComponent } from 'vue'
 const { createRouter, createWebHistory } = window['VueRouter']
-import P404 from '../views/error/404.vue'
-import Home from '../views/home/index.vue'
 
 // static
 export const constantRoutes = [
@@ -11,13 +10,13 @@ export const constantRoutes = [
 	},
 	{
 		path: '/404',
-		component: P404,
+		component: defineAsyncComponent(() => import('../views/error/404.vue')),
 		meta: { hidden: true }
 	},
 	{
 		name: 'Home',
 		path: '/home',
-		component: Home,
+		component: () => defineAsyncComponent(import('../views/home/index.vue')),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
