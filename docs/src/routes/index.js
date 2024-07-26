@@ -1,4 +1,6 @@
 const { createRouter, createWebHistory } = window['VueRouter']
+import P404 from '../views/error/404.vue'
+import Home from '../views/home/index.vue'
 
 // static
 export const constantRoutes = [
@@ -9,13 +11,13 @@ export const constantRoutes = [
 	},
 	{
 		path: '/404',
-		component: () => import('../views/error/404.vue'),
+		component: P404,
 		meta: { hidden: true }
 	},
 	{
 		name: 'Home',
 		path: '/home',
-		component: () => import('../views/home/index.vue'),
+		component: Home,
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
