@@ -9,13 +9,13 @@ export const constantRoutes = [
 	},
 	{
 		path: '/404',
-		component: () => import('/origin-oxr/src/views/error/404.vue'),
+		component: Vue.defineAsyncComponent(() => import('/origin-oxr/src/views/error/404.vue')),
 		meta: { hidden: true }
 	},
 	{
 		name: 'Home',
 		path: '/home',
-		component: () => import('/origin-oxr/src/views/home/index.vue'),
+		component: defineAsyncComponent(import('/origin-oxr/src/views/home/index.vue')),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
@@ -25,7 +25,7 @@ export const constantRoutes = [
 	{
 		name: 'Home1',
 		path: '/home1',
-		component: () => import('/origin-oxr/src/views/home/index.vue'),
+		component: () => import('/origin-oxr/src/views/error/403.vue'),
 		meta: {
 			title: '首页',
 			svg: 'shou_ye',
