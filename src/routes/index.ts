@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 export const constantRoutes: RouteRecordRaw[] = [
 	{
 		path: '/',
-		redirect: '/home',
+		redirect: '/song-list',
 		meta: { hidden: true }
 	},
 	{
@@ -22,6 +22,24 @@ export const constantRoutes: RouteRecordRaw[] = [
 			title: '首页',
 			svg: 'shou_ye',
 			color: '#2d8cf0'
+		}
+	},
+	{
+		name: 'SongList',
+		path: '/song-list',
+		component: () => import('@/views/song-list/index.vue'),
+		meta: {
+			title: '歌单',
+			svg: 'shou_ye',
+			color: '#2d8cf0'
+		}
+	},
+	{
+		path: '/:pathMatch(.*)*', // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后
+		redirect: '/404',
+		name: 'ErrorPage',
+		meta: {
+			hidden: true
 		}
 	}
 ]

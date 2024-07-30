@@ -1,5 +1,5 @@
 export default {
-	title: 'Origin-OXR',
+	title: 'Kuromia',
 	hasLogo: true,
 	theme: 'light',
 	themeEnums: {
