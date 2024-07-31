@@ -83,7 +83,7 @@ export const fetchPlayUrlPromise = async (bvid: string, cid: string) => {
 	// Returns a promise that resolves into the audio stream url
 	return new Promise((resolve, reject) => {
 		// console.log('Data.js Calling fetchPlayUrl:' + URL_PLAY_URL.replace("{bvid}", bvid).replace("{cid}", cid))
-		chrome.storage.local.get(['CurrentPlaying', 'PlayerSetting'], function (result) {
+		window.chrome.storage.local.get(['CurrentPlaying', 'PlayerSetting'], function (result:any) {
 			// To prohibit current playing audio from fetching a new audio stream
 			// If single loop, retreive the promise again.
 			if (
@@ -102,7 +102,7 @@ export const fetchPlayUrlPromise = async (bvid: string, cid: string) => {
 	})
 }
 
-export const fetchCID = async (bvid) => {
+export const fetchCID = async (bvid:string) => {
 	//console.log('Data.js Calling fetchCID:' + URL_BVID_TO_CID.replace("{bvid}", bvid))
 	const res = await fetch(URL_BVID_TO_CID.replace('{bvid}', bvid))
 	const json = await res.json()
@@ -194,7 +194,7 @@ export const fetchBiliSeriesInfo = async (mid: string, sid: string) => {
 export const fetchBiliColleList = async (mid: string, sid: string, favList: string[] = []) => {
 	console.log(favList)
 	console.info('calling fetchBiliColleList')
-	const res = await fetch(URL_BILICOLLE_INFO.replace('{mid}', mid).replace('{sid}', sid).replace('{pn}', 1))
+	const res = await fetch(URL_BILICOLLE_INFO.replace('{mid}', mid).replace('{sid}', sid).replace('{pn}', '1'))
 	const json = await res.clone().json()
 	const data = json.data
 
