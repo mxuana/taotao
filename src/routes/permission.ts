@@ -7,6 +7,8 @@ import settings from '@/settings'
 const resolveTitle = (ptitle: string) => (ptitle ? `${ptitle} - ${settings.title}` : `${settings.title}`)
 
 router.beforeEach((to, _from, next) => {
+	console.log('🚀 ~ router.beforeEach ~ to:', to)
+
 	document.title = resolveTitle((to.meta.title as string) || '')
 	NProgress.start()
 	next()

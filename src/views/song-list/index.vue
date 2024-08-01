@@ -50,6 +50,11 @@
 import songs from '@/assets/songs'
 
 import { floor, ceil, uniq } from 'lodash-es'
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
+console.log('🚀 ~ route:', route)
+console.log('🚀 ~ router:', router, router.getRoutes())
 const songzh: {
 	[key: string]: string[]
 } = {
