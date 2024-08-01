@@ -5,7 +5,7 @@ const URL_PLAY_URL = 'https://api.bilibili.com/x/player/playurl?cid={cid}&bvid={
 // BVID -> CID
 const URL_BVID_TO_CID = 'https://api.bilibili.com/x/player/pagelist?bvid={bvid}&jsonp=jsonp'
 // Video Basic Info
-const URL_VIDEO_INFO = 'http://api.bilibili.com/x/web-interface/view?bvid={bvid}'
+const URL_VIDEO_INFO = 'https://api.bilibili.com/x/web-interface/view?bvid={bvid}'
 // channel series API Extract Info
 const URL_BILISERIES_INFO =
 	'https://api.bilibili.com/x/series/archives?mid={mid}&series_id={sid}&only_normal=true&sort=desc&pn={pn}&ps=30'
@@ -20,7 +20,7 @@ const URL_LRC_MAPPING = 'https://raw.githubusercontent.com/kenmingwang/azusa-pla
 // LRC Base
 const URL_LRC_BASE = 'https://raw.githubusercontent.com/kenmingwang/azusa-player-lrcs/main/{songFile}'
 // Header GIF base
-const URL_HEADER_GIF = 'https://github.com/kenmingwang/azusa-player-lrcs/blob/main/aziRandomPic/{count}.gif?raw=true'
+// const URL_HEADER_GIF = 'https://github.com/kenmingwang/azusa-player-lrcs/blob/main/aziRandomPic/{count}.gif?raw=true'
 // Header GIF from Bilibili Src
 const URL_HEADER_GIFS = [
 	'https://i0.hdslb.com/bfs/article/956a1680d1408517d60e901b63eded873fe1ed5f.gif',
@@ -38,7 +38,7 @@ const URL_HEADER_GIFS = [
 	'https://i0.hdslb.com/bfs/article/c88cc015b4b3e036e1b5689f262f6720b3e0ab97.gif'
 ]
 // HEADER GIFs count: https://github.com/kenmingwang/azusa-player-lrcs/tree/main/aziRandomPic
-const COUNT_HEADER_GIFS = 12
+// const COUNT_HEADER_GIFS = 12
 // QQ SongSearch API
 const URL_QQ_SEARCH = 'https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg?key={KeyWord}'
 // QQ LyricSearchAPI
@@ -83,7 +83,7 @@ export const fetchPlayUrlPromise = async (bvid: string, cid: string) => {
 	// Returns a promise that resolves into the audio stream url
 	return new Promise((resolve, reject) => {
 		// console.log('Data.js Calling fetchPlayUrl:' + URL_PLAY_URL.replace("{bvid}", bvid).replace("{cid}", cid))
-		window.chrome.storage.local.get(['CurrentPlaying', 'PlayerSetting'], function (result:any) {
+		window.chrome.storage.local.get(['CurrentPlaying', 'PlayerSetting'], function (result: any) {
 			// To prohibit current playing audio from fetching a new audio stream
 			// If single loop, retreive the promise again.
 			if (
@@ -102,7 +102,7 @@ export const fetchPlayUrlPromise = async (bvid: string, cid: string) => {
 	})
 }
 
-export const fetchCID = async (bvid:string) => {
+export const fetchCID = async (bvid: string) => {
 	//console.log('Data.js Calling fetchCID:' + URL_BVID_TO_CID.replace("{bvid}", bvid))
 	const res = await fetch(URL_BVID_TO_CID.replace('{bvid}', bvid))
 	const json = await res.json()
@@ -120,7 +120,7 @@ export const fetchLRC = async (name: string, setLyric: Function, setSongTitle: F
 	const songName = extractSongName(name)
 	setSongTitle(songName)
 
-	const songFile = songs.find((v, i, a) => v.includes(songName))!
+	const songFile = songs.find((v) => v.includes(songName))!
 	// use song name to get the LRC
 	try {
 		const lrc = await fetch(URL_LRC_BASE.replace('{songFile}', songFile))

@@ -26,9 +26,9 @@ export class VideoInfo {
 	desc: string = ''
 	videos: number = 0
 	picSrc: string = ''
-	uploader: string = ''
+	uploader: any = ''
 	pages: Page[] = []
-	constructor(title: string, desc: string, videos: number, picSrc: string, uploader: string, pages: Page[]) {
+	constructor(title: string, desc: string, videos: number, picSrc: string, uploader: any, pages: Page[]) {
 		this.title = title
 		this.desc = desc
 		this.videos = videos
