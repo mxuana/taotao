@@ -1,4 +1,4 @@
-import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
+import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
 
 import 'nprogress/nprogress.css'
 
@@ -44,7 +44,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 	}
 ]
 const router = createRouter({
-	history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
+	history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
 	routes: constantRoutes
 })
 
