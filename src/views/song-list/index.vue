@@ -19,7 +19,7 @@
 		<br />
 		<el-card v-for="i in 5" class="song-list">
 			<div
-				:ref="i == 1 ? `songListRef${i}` : ''"
+				class="song-main"
 				:style="{ height: (ceil(songzh[`song_${i}`].length / floor(wwidth / iw)) * ih) / 16 + 'rem' }"
 				style="display: flex; flex-direction: column; flex-wrap: wrap"
 			>
@@ -50,11 +50,6 @@
 import songs from '@/assets/songs'
 
 import { floor, ceil, uniq } from 'lodash-es'
-import { useRouter, useRoute } from 'vue-router'
-const router = useRouter()
-const route = useRoute()
-console.log('🚀 ~ route:', route)
-console.log('🚀 ~ router:', router, router.getRoutes())
 const songzh: {
 	[key: string]: string[]
 } = {
@@ -69,12 +64,11 @@ for (let i = 1; i <= 5; i++)
 		.sort((a, b) => a.localeCompare(b, 'zh'))
 const ih = 34
 const iw = 88
-const songListRef1 = ref()
-const wwidth = ref(0)
+const wwidth = ref(window.innerWidth)
 const long = ref(/Mobi|Android|iPhone/i.test(navigator.userAgent) ? 2 : 4)
 onMounted(() => {
-	const { offsetWidth: s1w } = songListRef1.value[0]
-	wwidth.value = s1w
+	const xdom: HTMLDivElement = document.getElementsByClassName('song-main')[0] as HTMLDivElement
+	xdom && (wwidth.value = xdom.offsetWidth)
 })
 </script>
 
