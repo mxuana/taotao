@@ -35,6 +35,16 @@ export const constantRoutes: RouteRecordRaw[] = [
 		}
 	},
 	{
+		name: 'SongList2',
+		path: '/song-list2',
+		component: () => import('@/views/song-list2/index.vue'),
+		meta: {
+			title: '歌单',
+			svg: 'shou_ye',
+			color: '#2d8cf0'
+		}
+	},
+	{
 		path: '/:pathMatch(.*)*', // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后
 		redirect: '/404',
 		name: 'ErrorPage',

@@ -28,33 +28,8 @@
 		z-index: -1;
 	}
 }
-
-.song-list {
-	display: block;
-	border: 0.0625rem dashed gray;
-	border-radius: 1.25rem;
-	margin-bottom: 1.25rem;
-	& .el-card__body {
-		padding-right: unset;
-		padding-bottom: unset;
-
-		.song-item {
-			margin: 5px 0.5rem 5px 0;
-			white-space: break-spaces;
-
-			&.song-low {
-				min-width: 5rem;
-			}
-			&.el-tag {
-				justify-content: flex-start;
-				height: unset;
-				padding: 0.3125rem 0 0.3125rem 0.5625rem;
-				border-left: 5px #d0e9ff solid;
-				border-top-left-radius: unset;
-				border-bottom-left-radius: unset;
-			}
-		}
-	}
+.el-card :deep(.el-card__body) {
+	padding: 0.9375rem;
 }
 .song-content {
 	background-image: linear-gradient(
@@ -68,5 +43,13 @@
 		#bae5ff 100%
 	);
 	background-size: 3.5356rem 3.5356rem;
-	padding: 1.25rem;
+	padding: 0.9375rem;
+	.song-list {
+		margin-bottom: 20px;
+	}
+	.song-item {
+		min-width: 5rem;
+		margin: 5px 0.5rem 5px 0;
+		white-space: break-spaces;
+	}
 }

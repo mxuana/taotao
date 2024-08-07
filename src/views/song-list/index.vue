@@ -18,12 +18,26 @@
 		</el-card>
 		<br />
 		<el-card v-for="i in 5" class="song-list">
+			{{ floor(wwidth / iw) }}
+			<el-space
+				wrap
+				direction="vertical"
+				:size="[0, 0]"
+				:style="{
+					height: (ceil(songzh[`song_${i}`].length / floor(wwidth / iw)) * ih) / 16 + 'rem',
+					width: '100%'
+				}"
+			>
+				<el-tag class="song-item song-low" disable-transitions v-for="item in songzh[`song_${i}`]">
+					{{ item }}
+				</el-tag>
+			</el-space>
 			<div
 				class="song-main"
 				:style="{ height: (ceil(songzh[`song_${i}`].length / floor(wwidth / iw)) * ih) / 16 + 'rem' }"
 				style="display: flex; flex-direction: column; flex-wrap: wrap"
 			>
-				<el-tag v-for="item in songzh[`song_${i}`]" class="song-item song-low" disable-transitions>
+				<el-tag class="song-item song-low" disable-transitions v-for="item in songzh[`song_${i}`]">
 					{{ item }}
 				</el-tag>
 			</div>
@@ -63,7 +77,7 @@ for (let i = 1; i <= 5; i++)
 		.filter((c) => c.length === i)
 		.sort((a, b) => a.localeCompare(b, 'zh'))
 const ih = 34
-const iw = 88
+const iw = 80
 const wwidth = ref(window.innerWidth)
 const long = ref(/Mobi|Android|iPhone/i.test(navigator.userAgent) ? 2 : 4)
 onMounted(() => {
@@ -74,4 +88,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @import './index.scss';
+.song-content {
+	border: 1px solid gray;
+}
+.el-space :deep(.el-space__item) {
+	border-left: 5px solid #d0e9ff;
+}
 </style>
