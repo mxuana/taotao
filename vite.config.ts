@@ -7,6 +7,8 @@ import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import svgLoader from 'vite-svg-loader'
 import VueJsx from '@vitejs/plugin-vue-jsx'
+const INVALID_CHAR_REGEX = /[\x00-\x1F\x7F<>*#"{}|^[\]`;?:&=+$,]/g
+const DRIVE_LETTER_REGEX = /^[a-z]:/i
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd())
@@ -59,6 +61,7 @@ export default defineConfig(({ mode }) => {
 		],
 		build: {
 			outDir: 'docs',
+			sourcemap: false,
 			/** 单个 chunk 文件的大小超过 2048KB 时发出警告 */
 			chunkSizeWarningLimit: 2048,
 			/** 禁用 gzip 压缩大小报告 */
@@ -66,7 +69,19 @@ export default defineConfig(({ mode }) => {
 			/** 打包后静态资源目录 */
 			assetsDir: 'static',
 			rollupOptions: {
+				input: {
+					index: 'index.html'
+				},
 				output: {
+					chunkFileNames: 'static/js/[name]-[hash].js',
+					entryFileNames: 'static/js/[name]-[hash].js',
+					assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+					sanitizeFileName(name) {
+						const match = DRIVE_LETTER_REGEX.exec(name)
+						const driveLetter = match ? match[0] : ''
+						// substr 是被淘汰語法，因此要改 slice
+						return driveLetter + name.slice(driveLetter.length).replace(INVALID_CHAR_REGEX, '')
+					},
 					manualChunks: {
 						vue: ['vue', 'vue-router', 'pinia'],
 						element: ['element-plus', '@element-plus/icons-vue']
