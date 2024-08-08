@@ -1,57 +1,59 @@
 <template>
-	<el-tabs v-model="itype" style="margin: 0.9375rem 0 0.9375rem 0.9375rem">
+	<el-tabs v-model="itype" style="margin: 0.9375rem 0 0 0.9375rem">
 		<el-tab-pane label="按歌名" name="song">
-			<el-card v-for="i in 5" class="song-list">
-				<el-space
-					class="song-main"
-					wrap
-					direction="vertical"
-					:size="[3, 0]"
-					:style="{
-						height: (ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i))) * ih) / 16 + 'rem',
-						width: '100%'
-					}"
-				>
-					<template v-for="(item, index) in songzh[`song_${i}`]">
-						<div class="song-border">
-							<el-tag
-								class="song-item"
-								disable-transitions
-								:style="{
-									'border-left': `5px ${
-										color[
-											(ceil(
-												(index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))
-											) -
-												1) %
-												color.length
-										] || '#a2d3ff'
-									} solid`
-								}"
-							>
-								{{ item }}
-							</el-tag>
-						</div>
-					</template>
-				</el-space>
-			</el-card>
-			<el-card class="song-list" v-for="k in ['other', 'eng']">
-				<el-space
-					class="song-main"
-					wrap
-					direction="vertical"
-					:size="[0, 0]"
-					:style="{
-						height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(12))) * ih) / 16 + 'rem',
-						width: `calc(${wwidth}px - .9375rem)`
-					}"
-				>
-					<template v-for="(item, index) in songzh[`song_${k}`]">
-						<div class="song-border">
-							<el-tag
-								class="song-item"
-								disable-transitions
-								:style="{
+			<el-scrollbar height="calc(100vh - 70px)">
+				<el-card v-for="i in 5" class="song-list">
+					<el-space
+						class="song-main"
+						wrap
+						direction="vertical"
+						:size="[3, 0]"
+						:style="{
+							height: (ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i))) * ih) / 16 + 'rem',
+							width: '100%'
+						}"
+					>
+						<template v-for="(item, index) in songzh[`song_${i}`]">
+							<div class="song-border">
+								<el-tag
+									class="song-item"
+									disable-transitions
+									:style="{
+										'border-left': `5px ${
+											color[
+												(ceil(
+													(index + 1) /
+														ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))
+												) -
+													1) %
+													color.length
+											] || '#a2d3ff'
+										} solid`
+									}"
+								>
+									{{ item }}
+								</el-tag>
+							</div>
+						</template>
+					</el-space>
+				</el-card>
+				<el-card class="song-list" v-for="k in ['other', 'eng']">
+					<el-space
+						class="song-main"
+						wrap
+						direction="vertical"
+						:size="[0, 0]"
+						:style="{
+							height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(12))) * ih) / 16 + 'rem',
+							width: `calc(${wwidth}px - .9375rem)`
+						}"
+					>
+						<template v-for="(item, index) in songzh[`song_${k}`]">
+							<div class="song-border">
+								<el-tag
+									class="song-item"
+									disable-transitions
+									:style="{
 									'border-left': `5px ${
 										color[
 											(ceil(
@@ -70,33 +72,36 @@
 									} solid`,
 									'max-width': iw(12)/16+'rem'
 								}"
-								>{{ item }}
-							</el-tag>
-						</div>
-					</template>
-				</el-space>
-			</el-card>
+									>{{ item }}
+								</el-tag>
+							</div>
+						</template>
+					</el-space>
+				</el-card>
+			</el-scrollbar>
 		</el-tab-pane>
 		<el-tab-pane label="按歌手" name="singer">
-			<el-space
-				wrap
-				class="item"
-				v-for="singer in Object.keys(datas).sort((a, b) =>
-					a.localeCompare(b, 'zh-Hans-CN', { sensitivity: 'accent' })
-				)"
-			>
-				<span class="singer">{{ singer }}:&emsp;</span>
-				<el-tag
-					disable-transitions
-					v-for="(song, index) in datas[singer].sort((a, b) =>
-						a['歌曲'].localeCompare(b['歌曲'], 'zh-Hans-CN', { sensitivity: 'accent' })
+			<el-scrollbar height="calc(100vh - 70px)">
+				<el-space
+					wrap
+					class="item"
+					v-for="singer in Object.keys(datas).sort((a, b) =>
+						a.localeCompare(b, 'zh-Hans-CN', { sensitivity: 'accent' })
 					)"
-					:style="{
-						'border-left': `5px ${color[(index + 1) % color.length] || '#a2d3ff'} solid`
-					}"
-					>{{ song['歌曲'] }}</el-tag
 				>
-			</el-space>
+					<span class="singer">{{ singer }}:&emsp;</span>
+					<el-tag
+						disable-transitions
+						v-for="(song, index) in datas[singer].sort((a, b) =>
+							a['歌曲'].localeCompare(b['歌曲'], 'zh-Hans-CN', { sensitivity: 'accent' })
+						)"
+						:style="{
+							'border-left': `5px ${color[(index + 1) % color.length] || '#a2d3ff'} solid`
+						}"
+						>{{ song['歌曲'] }}</el-tag
+					>
+				</el-space>
+			</el-scrollbar>
 		</el-tab-pane>
 	</el-tabs>
 </template>
