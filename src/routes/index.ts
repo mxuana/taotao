@@ -19,9 +19,8 @@ export const constantRoutes: RouteRecordRaw[] = [
 		path: '/home',
 		component: () => import('@/views/home/index.vue'),
 		meta: {
-			title: '首页',
-			svg: 'shou_ye',
-			color: '#2d8cf0'
+			title: '按钮',
+			icon: 'Lollipop'
 		}
 	},
 	{
@@ -30,18 +29,16 @@ export const constantRoutes: RouteRecordRaw[] = [
 		component: () => import('@/views/song-list/index.vue'),
 		meta: {
 			title: '歌单',
-			svg: 'shou_ye',
-			color: '#2d8cf0'
+			icon: 'Tickets'
 		}
 	},
 	{
-		name: 'SongList2',
-		path: '/song-list2',
-		component: () => import('@/views/song-list2/index.vue'),
+		name: 'ChenZai',
+		path: '/chenzai',
+		component: () => import('@/views/chenzai/index.vue'),
 		meta: {
-			title: '歌单',
-			svg: 'shou_ye',
-			color: '#2d8cf0'
+			title: '晨仔歌单',
+			icon: 'Tickets'
 		}
 	},
 	{
