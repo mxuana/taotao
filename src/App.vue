@@ -17,15 +17,7 @@
 			>
 		</el-menu>
 	</el-drawer>
-	<el-button
-		type="primary"
-		style="position: fixed; right: 0; transform: rotate(-90deg); transform-origin: right bottom; z-index: 2"
-		round
-		plain
-		@click="drawer = !drawer"
-	>
-		KUROMIA
-	</el-button>
+	<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
 	<router-view />
 </template>
 
@@ -49,5 +41,10 @@ const handleSelect = () => {
 </script>
 <style lang="scss">
 .menu-btn {
+	position: fixed;
+	right: 0;
+	transform: rotate(-90deg);
+	transform-origin: right bottom;
+	z-index: 2;
 }
 </style>

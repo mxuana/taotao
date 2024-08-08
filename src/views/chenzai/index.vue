@@ -1,7 +1,7 @@
 <template>
-	<el-tabs v-model="itype" style="margin: 0.9375rem 0 0 0.9375rem">
+	<el-tabs v-model="itype" class="song-tabs">
 		<el-tab-pane label="按歌名" name="song">
-			<el-scrollbar height="calc(100vh - 70px)">
+			<el-scrollbar class="song-scrollbar" height="calc(100vh - 70px)">
 				<el-card v-for="i in 5" class="song-list">
 					<el-space
 						class="song-main"
