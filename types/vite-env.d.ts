@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="vidstack/vue" />
 /// <reference types="chrome"/>
 /// <reference types="vite-svg-loader" />
 interface ImportMetaEnv {

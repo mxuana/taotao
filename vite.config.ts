@@ -7,6 +7,7 @@ import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import svgLoader from 'vite-svg-loader'
 import VueJsx from '@vitejs/plugin-vue-jsx'
+import { vite as vidstack } from 'vidstack/plugins'
 const INVALID_CHAR_REGEX = /[\x00-\x1F\x7F<>*#"{}|^[\]`;?:&=+$,]/g
 const DRIVE_LETTER_REGEX = /^[a-z]:/i
 // https://vitejs.dev/config/
@@ -32,9 +33,16 @@ export default defineConfig(({ mode }) => {
 			}
 		},
 		plugins: [
-			vue(),
+			vue({
+				template: {
+					compilerOptions: {
+						isCustomElement: (tag) => tag.startsWith('media-')
+					}
+				}
+			}),
 			VueJsx(),
 			svgLoader({ defaultImport: 'url' }),
+			vidstack(),
 			AutoImport({
 				include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
 				imports: ['vue', 'vue-router'],

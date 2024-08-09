@@ -4,11 +4,11 @@
 		title="Kuromia - 库洛米娅_"
 		direction="ltr"
 		class="menu-btn"
-		size="80%"
+		:size="isMob ? '80%' : '30%'"
 		:show-close="false"
 		:before-close="handleClose"
 	>
-		<el-menu :default-active="defaultActive" class="el-menu-vertical-demo" router @select="handleSelect">
+		<el-menu :default-active="defaultActive" router @select="handleClose">
 			<el-menu-item v-for="route in routes.filter((r) => !r.meta.hidden)" :index="route.path">
 				<el-icon v-if="route.meta?.icon">
 					<component :is="route.meta.icon" />
@@ -18,33 +18,42 @@
 		</el-menu>
 	</el-drawer>
 	<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
-	<router-view />
+	<el-scrollbar height="100vh">
+		<router-view />
+	</el-scrollbar>
 </template>
 
 <script setup lang="ts">
 import { useRouter, useRoute, RouteRecord } from 'vue-router'
+import { useWindowSize } from '@vueuse/core'
 const drawer = ref(false)
-const handleClose = () => {
-	drawer.value = !drawer.value
-}
+const handleClose = () => (drawer.value = !drawer.value)
+
+const isMob = ref(/Mobi|Android|iPhone/i.test(navigator.userAgent))
 const router = useRouter()
 const routes: RouteRecord[] = router.getRoutes()
 
 const $route = useRoute()
-const route = computed(() => {
-	return $route
-})
+const route = computed(() => $route)
 const defaultActive = ref<string>(route.value.path)
-const handleSelect = () => {
-	handleClose()
-}
+const { width } = useWindowSize()
+watch(
+	() => width.value,
+	() => (isMob.value = /Mobi|Android|iPhone/i.test(navigator.userAgent))
+)
 </script>
 <style lang="scss">
 .menu-btn {
 	position: fixed;
 	right: 0;
-	transform: rotate(-90deg);
-	transform-origin: right bottom;
+	height: unset !important;
+	padding: 0.625rem 0.3125rem !important;
 	z-index: 2;
+	writing-mode: vertical-rl;
+	//text-orientation: upright;
+	white-space: nowrap;
+}
+.el-drawer {
+	writing-mode: unset;
 }
 </style>

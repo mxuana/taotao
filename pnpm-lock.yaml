@@ -35,6 +35,9 @@ importers:
       pinia-plugin-persistedstate:
         specifier: ^3.2.1
         version: 3.2.1(pinia@2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4)))
+      vidstack:
+        specifier: ^1.12.5
+        version: 1.12.5
       vite-svg-loader:
         specifier: ^5.1.0
         version: 5.1.0(vue@3.4.34(typescript@5.5.4))
@@ -403,11 +406,17 @@ packages:
   '@floating-ui/core@1.6.5':
     resolution: {integrity: sha512-8GrTWmoFhm5BsMZOTHeGD2/0FLKLQQHvO/ZmQga4tKempYRLz8aqJGqXVuQgisnMObq2YZ2SgkwctN1LOOxcqA==}
 
+  '@floating-ui/dom@1.6.10':
+    resolution: {integrity: sha512-fskgCFv8J8OamCmyun8MfjB1Olfn+uZKjOKZ0vhYF3gRmEUXcGOjxWL8bBr7i4kIuPZ2KD2S3EUIOxnjC8kl2A==}
+
   '@floating-ui/dom@1.6.8':
     resolution: {integrity: sha512-kx62rP19VZ767Q653wsP1XZCGIirkE09E0QUGNYTM/ttbbQHqcGPdSfWFxUyyNLc/W6aoJRBajOSXhP6GXjC0Q==}
 
   '@floating-ui/utils@0.2.5':
     resolution: {integrity: sha512-sTcG+QZ6fdEUObICavU+aB3Mp8HY4n14wYHdxK4fXjPmv3PXZZeY5RaguJmGyeH/CJQhX3fqKUtS4qc1LoHwhQ==}
+
+  '@floating-ui/utils@0.2.7':
+    resolution: {integrity: sha512-X8R8Oj771YRl/w+c1HqAC1szL8zWQRwFvgDwT129k9ACdBoud/+/rX9V0qiMl6LWUdP9voC2nDVZYPMQQsb6eA==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -577,6 +586,9 @@ packages:
 
   '@types/svgo@2.6.4':
     resolution: {integrity: sha512-l4cmyPEckf8moNYHdJ+4wkHvFxjyW6ulm9l4YGaOxeyBWPhBOT0gvni1InpFPdzx1dKf/2s62qGITwxNWnPQng==}
+
+  '@types/trusted-types@2.0.7':
+    resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
 
   '@types/web-bluetooth@0.0.16':
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
@@ -1462,6 +1474,9 @@ packages:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
 
+  lit-html@2.8.0:
+    resolution: {integrity: sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==}
+
   loader-utils@1.4.2:
     resolution: {integrity: sha512-I5d00Pd/jwMD2QCduo657+YM/6L3KZu++pmX9VFncxaxvHcru9jx1lBaFft+r4Mt2jK0Yhp41XlRAihzPxHNCg==}
     engines: {node: '>=4.0.0'}
@@ -1511,6 +1526,10 @@ packages:
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
+
+  media-captions@1.0.4:
+    resolution: {integrity: sha512-cyDNmuZvvO4H27rcBq2Eudxo9IZRDCOX/I7VEyqbxsEiD2Ei7UYUhG/Sc5fvMZjmathgz3fEK7iAKqvpY+Ux1w==}
+    engines: {node: '>=16'}
 
   memoize-one@6.0.0:
     resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
@@ -2040,6 +2059,10 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+  vidstack@1.12.5:
+    resolution: {integrity: sha512-aqQLPYvnu/eIhk+DMcuF0RyUWat4gRTLBjFbJPexyxAMgAqalxfqMknwIZtK39uyfeG6q4To+X8QAgU6f5NQOA==}
+    engines: {node: '>=18'}
+
   vite-plugin-style-import@2.0.0:
     resolution: {integrity: sha512-qtoHQae5dSUQPo/rYz/8p190VU5y19rtBaeV7ryLa/AYAU/e9CG89NrN/3+k7MR8mJy/GPIu91iJ3zk9foUOSA==}
     peerDependencies:
@@ -2448,7 +2471,12 @@ snapshots:
 
   '@floating-ui/core@1.6.5':
     dependencies:
-      '@floating-ui/utils': 0.2.5
+      '@floating-ui/utils': 0.2.7
+
+  '@floating-ui/dom@1.6.10':
+    dependencies:
+      '@floating-ui/core': 1.6.5
+      '@floating-ui/utils': 0.2.7
 
   '@floating-ui/dom@1.6.8':
     dependencies:
@@ -2456,6 +2484,8 @@ snapshots:
       '@floating-ui/utils': 0.2.5
 
   '@floating-ui/utils@0.2.5': {}
+
+  '@floating-ui/utils@0.2.7': {}
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
@@ -2581,6 +2611,8 @@ snapshots:
   '@types/svgo@2.6.4':
     dependencies:
       '@types/node': 20.14.12
+
+  '@types/trusted-types@2.0.7': {}
 
   '@types/web-bluetooth@0.0.16': {}
 
@@ -3634,6 +3666,10 @@ snapshots:
 
   kind-of@6.0.3: {}
 
+  lit-html@2.8.0:
+    dependencies:
+      '@types/trusted-types': 2.0.7
+
   loader-utils@1.4.2:
     dependencies:
       big.js: 5.2.2
@@ -3682,6 +3718,8 @@ snapshots:
   mdn-data@2.0.28: {}
 
   mdn-data@2.0.30: {}
+
+  media-captions@1.0.4: {}
 
   memoize-one@6.0.0: {}
 
@@ -4343,6 +4381,13 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   vary@1.1.2: {}
+
+  vidstack@1.12.5:
+    dependencies:
+      '@floating-ui/dom': 1.6.10
+      lit-html: 2.8.0
+      media-captions: 1.0.4
+      unplugin: 1.12.0
 
   vite-plugin-style-import@2.0.0(vite@5.3.5(@types/node@20.14.12)(sass@1.77.8)):
     dependencies:

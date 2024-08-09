@@ -19,6 +19,7 @@
 		"nprogress": "^0.2.0",
 		"pinia": "^2.2.0",
 		"pinia-plugin-persistedstate": "^3.2.1",
+		"vidstack": "^1.12.5",
 		"vite-svg-loader": "^5.1.0",
 		"vue": "^3.4.31",
 		"vue-bilibili-embed-renderer-oxr": "^1.2.3",
