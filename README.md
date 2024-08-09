@@ -1,2 +1,2 @@
-# origin-oxr
-## 主页托管：https://oxrial.github.io/origin-oxr/
+# Kuromia-oxr
+## 主页托管：https://oxrial.github.io/kuromia-oxr/
