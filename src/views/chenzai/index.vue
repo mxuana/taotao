@@ -109,10 +109,11 @@
 <script setup lang="ts">
 import songs from '@/assets/songs-chenzai'
 import { groupBy, ceil, min, uniq, floor, max } from 'lodash-es'
+import { useWindowSize } from '@vueuse/core'
+
 const allsongs = songs.data.filter((d) => !d['类型'].includes('SC点歌'))
 const datas = groupBy(allsongs, (x) => x['歌手'])
 const itype = ref('song')
-const wwidth = ref(window.innerWidth)
 const convLen = (c: string) => {
 	let l = c.length
 	const matchr = c.match(/[a-z]/g)
@@ -135,14 +136,17 @@ const songzh: {
 }
 for (let i = 1; i <= 5; i++) songzh[`song_${i}`] = uniq(zh).filter((c) => convLen(c) === i)
 
-const iw = (clen: number) => {
-	return max([33 + 12 * min([clen < 4 ? 4 : clen, 12])!, 88])!
-}
+const iw = (clen: number) => max([33 + 12 * min([clen < 4 ? 4 : clen, 12])!, 88])!
+
 const ih = 34
-onMounted(() => {
+const wwidth = ref(window.innerWidth)
+const { width } = useWindowSize()
+const resize = () => {
 	const xdom: HTMLDivElement = document.getElementsByClassName('song-main')[0] as HTMLDivElement
 	xdom && (wwidth.value = xdom.offsetWidth)
-})
+}
+watch(() => width.value, resize)
+onMounted(resize)
 </script>
 
 <style lang="scss" scoped>

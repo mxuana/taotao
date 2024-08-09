@@ -1,0 +1,1 @@
+import{_ as t}from"./plugin-vueexport-helper-DlAUqK2U.js";import{f as o}from"./element-JUSRou9K.js";import{j as r,J as a,K as c,a0 as n}from"./vue-DqeJ9wJ0.js";const s={};function _(f,d){const e=o;return r(),a(e,null,{default:c(()=>[n(" 按钮 ")]),_:1})}const p=t(s,[["render",_]]);export{p as default};

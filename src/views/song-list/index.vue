@@ -97,6 +97,8 @@
 <script setup lang="ts">
 import songs from '@/assets/songs'
 import { floor, ceil, uniq, min, max } from 'lodash-es'
+import { useWindowSize } from '@vueuse/core'
+
 const color = ['#a0e5ff77', '#d69dff55', '#ff9a8b55', '#ffe38c55', '#a5ff9955']
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
@@ -127,10 +129,13 @@ const ih = 34
 const iw = (clen: number) => max([33 + 12 * min([clen < 4 ? 4 : clen, 12])!, 88])!
 // 父容器宽，默认取视口宽
 const wwidth = ref(window.innerWidth)
-onMounted(() => {
+const { width } = useWindowSize()
+const resize = () => {
 	const xdom: HTMLDivElement = document.getElementsByClassName('song-main')[0] as HTMLDivElement
 	xdom && (wwidth.value = xdom.offsetWidth)
-})
+}
+watch(() => width.value, resize)
+onMounted(resize)
 </script>
 
 <style lang="scss" scoped>
