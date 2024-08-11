@@ -15,7 +15,13 @@
 					注：若页面异常请看图片版本
 				</div>
 			</div>
-			<SvgIcon name="avater" width="70" height="70" is="v-fragment" style="top: 100px; position: absolute" />
+			<SvgIcon
+				name="avater"
+				width="70"
+				height="70"
+				is="v-fragment"
+				:in-style="{ top: '100px', position: 'absolute' }"
+			/>
 		</el-card>
 		<br />
 		<el-card v-for="i in 5" class="song-list">
@@ -59,7 +65,7 @@
 				alignment="start"
 				direction="vertical"
 				:size="[3, 0]"
-				:style="{ height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(12))) * ih) / 16 + 'rem' }"
+				:style="{ height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11))) * ih) / 16 + 'rem' }"
 			>
 				<template v-for="(item, index) in songzh[`song_${k}`]">
 					<div class="song-border">

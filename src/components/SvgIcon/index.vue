@@ -1,6 +1,11 @@
 <template>
 	<component :is="is">
-		<svg xmlns="http://www.w3.org/2000/svg" :style="{ width, height }" aria-hidden="true" v-bind="$attrs">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			:style="{ width, height, ...inStyle }"
+			aria-hidden="true"
+			v-bind="$attrs"
+		>
 			<use :xlink:href="prefix + name" :fill="color" />
 		</svg>
 	</component>
@@ -14,6 +19,7 @@ type SvgIconType = {
 	prefix?: string
 	is: string
 	name: string
+	inStyle: object
 }
 withDefaults(defineProps<SvgIconType>(), {
 	width: '',

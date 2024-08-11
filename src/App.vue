@@ -17,6 +17,7 @@
 			>
 		</el-menu>
 	</el-drawer>
+	{{ isMob }}
 	<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
 	<el-scrollbar height="100vh">
 		<router-view />
