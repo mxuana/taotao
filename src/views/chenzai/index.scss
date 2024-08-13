@@ -1,5 +1,6 @@
 .song-tabs {
 	margin: 0.9375rem 0 0 0.9375rem;
+	background-color: #fff;
 }
 
 .item {
@@ -43,9 +44,12 @@
 	margin: 0.3125rem 0.5rem 0.3125rem 0;
 	white-space: break-spaces;
 }
-.el-card:not(:first-child) {
+.el-card {
 	border-radius: 1.25rem;
 	:deep(.el-card__body) {
-		padding: 0.9375rem 0 0.9375rem 0.9375rem;
+		padding: 0.9375rem 5px 0.9375rem 0.9375rem;
 	}
+}
+:deep(.el-tabs__header) {
+	padding: 0 20px;
 }

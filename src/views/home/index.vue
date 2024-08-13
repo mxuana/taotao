@@ -43,6 +43,6 @@ const resolveName = (path: string) => path && path.substring(path.lastIndexOf('/
 
 <style lang="scss" scoped>
 .el-card {
-	margin: 15px;
+	margin: 0.9375rem;
 }
 </style>

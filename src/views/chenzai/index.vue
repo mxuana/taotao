@@ -136,7 +136,7 @@ const songzh: {
 }
 for (let i = 1; i <= 5; i++) songzh[`song_${i}`] = uniq(zh).filter((c) => convLen(c) === i)
 
-const iw = (clen: number) => max([33 + 12 * min([clen < 4 ? 4 : clen, 12])!, 88])!
+const iw = (clen: number) => max([33 + 12 * min([clen < 4 ? 4 : clen, 12])!, 80])!
 
 const ih = 34
 const wwidth = ref(window.innerWidth)
