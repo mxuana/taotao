@@ -125,7 +125,7 @@ import { floor, ceil, uniq, min, max } from 'lodash-es'
 import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
-const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#a5ff99']
+const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
