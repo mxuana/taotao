@@ -41,6 +41,13 @@
 						<el-tag
 							class="song-item"
 							disable-transitions
+							type="info"
+							:color="
+								color[
+									(ceil((index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))) - 1) %
+										color.length
+								] + '11' || '#a2d3ff'
+							"
 							:style="{
 								'border-left': `5px ${
 									// 按列序取颜色
@@ -48,8 +55,12 @@
 										(ceil((index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))) -
 											1) %
 											color.length
-									] || '#a2d3ff'
-								} solid`
+									] + '44' || '#a2d3ff'
+								} solid`,
+								color: color[
+									(ceil((index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))) - 1) %
+										color.length
+								]
 							}"
 						>
 							{{ item }}
@@ -65,31 +76,38 @@
 				alignment="start"
 				direction="vertical"
 				:size="[3, 0]"
-				:style="{ height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11))) * ih) / 16 + 'rem' }"
+				:style="{
+					height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11))) * ih + 34 / 2) / 16 + 'rem'
+				}"
 			>
 				<template v-for="(item, index) in songzh[`song_${k}`]">
 					<div class="song-border">
 						<el-tag
 							class="song-item"
 							disable-transitions
+							type="info"
+							:color="
+								color[
+									(ceil((index + 1) / ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11)))) -
+										1) %
+										color.length
+								] + '11' || '#a2d3ff'
+							"
 							:style="{
 								'border-left': `5px ${
 									color[
-										(ceil(
-											(index + 1) /
-												ceil(
-													songzh[`song_${k}`].length /
-														floor(
-															wwidth / iw(max(songzh[`song_${k}`].map((c) => convLen(c)))!)
-														)
-												)
-										) -
+										(ceil((index + 1) / ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11)))) -
 											1) %
 											color.length
-									] || '#a2d3ff'
+									] + '44' || '#a2d3ff'
 								} solid`,
 								// 设单个歌名最大长度为12个汉字
-								'max-width': iw(12)/16+'rem'
+								'max-width': iw(11) / 16 + 'rem',
+								color: color[
+									(ceil((index + 1) / ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11)))) -
+										1) %
+										color.length
+								]
 							}"
 						>
 							{{ item }}
@@ -107,7 +125,7 @@ import { floor, ceil, uniq, min, max } from 'lodash-es'
 import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
-const color = ['#a0e5ff77', '#d69dff55', '#ff9a8b55', '#ffe38c55', '#a5ff9955']
+const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#a5ff99']
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
