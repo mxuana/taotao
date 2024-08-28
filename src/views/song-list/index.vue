@@ -33,7 +33,7 @@
 				:size="[3, 0]"
 				:style="{
 					// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
-					height: (ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i))) * ih) / 16 + 'rem'
+					height: (ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i))) * ih) / 16 + 'rem'
 				}"
 			>
 				<template v-for="(item, index) in songzh[`song_${i}`]">
@@ -44,7 +44,8 @@
 							type="info"
 							:color="
 								color[
-									(ceil((index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))) - 1) %
+									(ceil((index + 1) / ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i)))) -
+										1) %
 										color.length
 								] + '11' || '#a2d3ff'
 							"
@@ -52,13 +53,16 @@
 								'border-left': `5px ${
 									// 按列序取颜色
 									color[
-										(ceil((index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))) -
+										(ceil(
+											(index + 1) / ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i)))
+										) -
 											1) %
 											color.length
 									] + '44' || '#a2d3ff'
 								} solid`,
 								color: color[
-									(ceil((index + 1) / ceil(songzh[`song_${i}`].length / floor(wwidth / iw(i)))) - 1) %
+									(ceil((index + 1) / ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i)))) -
+										1) %
 										color.length
 								]
 							}"
@@ -77,7 +81,7 @@
 				direction="vertical"
 				:size="[3, 0]"
 				:style="{
-					height: (ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11))) * ih + 34 / 2) / 16 + 'rem'
+					height: (ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11))) * ih + 34 / 2) / 16 + 'rem'
 				}"
 			>
 				<template v-for="(item, index) in songzh[`song_${k}`]">
@@ -88,7 +92,9 @@
 							type="info"
 							:color="
 								color[
-									(ceil((index + 1) / ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11)))) -
+									(ceil(
+										(index + 1) / ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11)))
+									) -
 										1) %
 										color.length
 								] + '11' || '#a2d3ff'
@@ -96,7 +102,9 @@
 							:style="{
 								'border-left': `5px ${
 									color[
-										(ceil((index + 1) / ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11)))) -
+										(ceil(
+											(index + 1) / ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11)))
+										) -
 											1) %
 											color.length
 									] + '44' || '#a2d3ff'
@@ -104,7 +112,9 @@
 								// 设单个歌名最大长度为12个汉字
 								'max-width': iw(11) / 16 + 'rem',
 								color: color[
-									(ceil((index + 1) / ceil(songzh[`song_${k}`].length / floor(wwidth / iw(11)))) -
+									(ceil(
+										(index + 1) / ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11)))
+									) -
 										1) %
 										color.length
 								]
@@ -144,6 +154,7 @@ const songzh: {
 		.sort((a, b) => a.localeCompare(b, 'zh')),
 	song_eng: uniq(songs.eng).sort()
 }
+const dynamicLen = (arr: string[]) => arr.filter((a: string) => convLen(a) > 11).length + arr.length
 // 歌名小于5的部分
 for (let i = 1; i <= 5; i++)
 	songzh[`song_${i}`] = uniq(songs.zh)
