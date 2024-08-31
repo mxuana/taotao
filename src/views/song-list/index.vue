@@ -66,6 +66,7 @@
 										color.length
 								]
 							}"
+							@click="copySong(item)"
 						>
 							{{ item }}
 						</el-tag>
@@ -134,6 +135,10 @@ import songs from '@/assets/songs'
 import { floor, ceil, uniq, min, max } from 'lodash-es'
 import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import { useClipboard } from '@vueuse/core'
+const source = ref('---')
+const { copy, isSupported } = useClipboard({ source })
+import { ElMessage } from 'element-plus'
 
 const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
@@ -163,13 +168,27 @@ for (let i = 1; i <= 5; i++)
 // 单个高（px）
 const ih = 34
 // 宽度计算（px）
-const iw = (clen: number) => max([33 + 12 * min([clen < 4 ? 4 : clen, 12])!, 80])!
+const iw = (clen: number) => max([33.5 + 12 * min([clen < 4 ? 4 : clen, 12])!, 80])!
 // 父容器宽，默认取视口宽
 const wwidth = ref(window.innerWidth)
 const { width } = useWindowSize()
 const resize = () => {
 	const xdom: HTMLDivElement = document.getElementsByClassName('song-main')[0] as HTMLDivElement
 	xdom && (wwidth.value = xdom.offsetWidth)
+}
+const copySong = (v: string) => {
+	if (isSupported) {
+		copy(`点歌 ${v}`)
+		ElMessage({
+			message: `点歌 ${v}`,
+			grouping: true,
+			type: 'success',
+			duration: 5000,
+			plain: true,
+			offset: 200,
+			showClose: true
+		})
+	}
 }
 watch(() => width.value, resize)
 onMounted(resize)

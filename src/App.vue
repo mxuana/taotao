@@ -1,25 +1,27 @@
 <template>
-	<el-drawer
-		v-model="drawer"
-		title="Kuromia - 库洛米娅_"
-		direction="ltr"
-		class="menu-btn"
-		:size="isMob ? '80%' : '30%'"
-		:show-close="false"
-		:before-close="handleClose"
-	>
-		<el-menu :default-active="defaultActive" router @select="handleClose">
-			<el-menu-item v-for="route in routes.filter((r) => !r.meta.hidden)" :index="route.path">
-				<el-icon v-if="route.meta?.icon">
-					<component :is="route.meta.icon" />
-				</el-icon>
-				{{ route.meta.title }}</el-menu-item
-			>
-		</el-menu>
-	</el-drawer>
-	<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
 	<el-scrollbar height="100vh">
 		<router-view />
+		<el-drawer
+			v-model="drawer"
+			title="Kuromia - 库洛米娅_"
+			direction="ltr"
+			class="menu-btn"
+			:size="isMob ? '80%' : '30%'"
+			:show-close="false"
+			:before-close="handleClose"
+		>
+			<el-menu :default-active="defaultActive" router @select="handleClose">
+				<el-menu-item v-for="route in routes.filter((r) => !r.meta.hidden)" :index="route.path">
+					<el-icon v-if="route.meta?.icon">
+						<component :is="route.meta.icon" />
+					</el-icon>
+					{{ route.meta.title }}</el-menu-item
+				>
+			</el-menu>
+		</el-drawer>
+		<div style="text-align: right">
+			<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
+		</div>
 	</el-scrollbar>
 </template>
 
@@ -44,14 +46,13 @@ watch(
 </script>
 <style lang="scss">
 .menu-btn {
-	position: fixed;
-	right: 0;
+	// position: fixed;
+	// right: 0;
 	height: unset !important;
-	padding: 0.625rem 0.3125rem !important;
-	z-index: 2;
-	writing-mode: vertical-rl;
-	//text-orientation: upright;
-	white-space: nowrap;
+	// padding: 0.625rem 0.3125rem !important;
+	// z-index: 2;
+	// writing-mode: vertical-rl;
+	// white-space: nowrap;
 }
 .el-drawer {
 	writing-mode: unset;

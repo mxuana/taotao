@@ -1,5 +1,12 @@
 .el-card:not(:first-child) {
 	border-radius: 20px;
+}
+@media screen and (orientation: landscape) {
+	:deep(.el-card__body) {
+		padding: 0.9375rem;
+	}
+}
+@media screen and (orientation: portrait) {
 	:deep(.el-card__body) {
 		padding: 0.9375rem 0 0.9375rem 0.9375rem;
 	}
@@ -7,6 +14,7 @@
 .el-space {
 	align-content: flex-start;
 }
+
 .song-content {
 	padding: 0.9375rem;
 	.slogan {
