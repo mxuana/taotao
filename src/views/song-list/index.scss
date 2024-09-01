@@ -7,8 +7,10 @@
 	}
 }
 @media screen and (orientation: portrait) {
-	:deep(.el-card__body) {
-		padding: 0.9375rem 0 0.9375rem 0.9375rem;
+	.el-card:not(:first-child) {
+		:deep(.el-card__body) {
+			padding: 0.9375rem 0 0.9375rem 0.9375rem;
+		}
 	}
 }
 .el-space {
