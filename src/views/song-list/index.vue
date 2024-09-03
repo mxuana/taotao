@@ -33,7 +33,7 @@
 				:size="[3, 0]"
 				:style="{
 					// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
-					height: (ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i))) * ih) / 16 + 'rem'
+					height: (dynamicCount(songzh[`song_${i}`], i) * ih) / 16 + 'rem'
 				}"
 			>
 				<template v-for="(item, index) in songzh[`song_${i}`]">
@@ -42,29 +42,13 @@
 							class="song-item"
 							disable-transitions
 							type="info"
-							:color="
-								color[
-									(ceil((index + 1) / ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i)))) -
-										1) %
-										color.length
-								] + '11' || '#a2d3ff'
-							"
+							:color="color[dynamicColor(index, songzh[`song_${i}`], i)] + '11' || '#a2d3ff'"
 							:style="{
 								'border-left': `5px ${
 									// 按列序取颜色
-									color[
-										(ceil(
-											(index + 1) / ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i)))
-										) -
-											1) %
-											color.length
-									] + '44' || '#a2d3ff'
+									color[dynamicColor(index, songzh[`song_${i}`], i)] + '44' || '#a2d3ff'
 								} solid`,
-								color: color[
-									(ceil((index + 1) / ceil(dynamicLen(songzh[`song_${i}`]) / floor(wwidth / iw(i)))) -
-										1) %
-										color.length
-								]
+								color: color[dynamicColor(index, songzh[`song_${i}`], i)]
 							}"
 							@click="copySong(item)"
 						>
@@ -82,7 +66,7 @@
 				direction="vertical"
 				:size="[3, 0]"
 				:style="{
-					height: (ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11))) * ih + 34 / 2) / 16 + 'rem'
+					height: (dynamicCount(songzh[`song_${k}`], 11) * ih + 34 / 2) / 16 + 'rem'
 				}"
 			>
 				<template v-for="(item, index) in songzh[`song_${k}`]">
@@ -91,34 +75,14 @@
 							class="song-item"
 							disable-transitions
 							type="info"
-							:color="
-								color[
-									(ceil(
-										(index + 1) / ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11)))
-									) -
-										1) %
-										color.length
-								] + '11' || '#a2d3ff'
-							"
+							:color="color[dynamicColor(index, songzh[`song_${k}`], 11)] + '11' || '#a2d3ff'"
 							:style="{
 								'border-left': `5px ${
-									color[
-										(ceil(
-											(index + 1) / ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11)))
-										) -
-											1) %
-											color.length
-									] + '44' || '#a2d3ff'
+									color[dynamicColor(index, songzh[`song_${k}`], 11)] + '44' || '#a2d3ff'
 								} solid`,
-								// 设单个歌名最大长度为12个汉字
+								// 设单个歌名最大长度为11个汉字
 								'max-width': iw(11) / 16 + 'rem',
-								color: color[
-									(ceil(
-										(index + 1) / ceil(dynamicLen(songzh[`song_${k}`]) / floor(wwidth / iw(11)))
-									) -
-										1) %
-										color.length
-								]
+								color: color[dynamicColor(index, songzh[`song_${k}`], 11)]
 							}"
 						>
 							{{ item }}
@@ -136,11 +100,16 @@ import { floor, ceil, uniq, min, max } from 'lodash-es'
 import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useClipboard } from '@vueuse/core'
-const source = ref('---')
-const { copy, isSupported } = useClipboard({ source })
 import { ElMessage } from 'element-plus'
 
+const source = ref('---')
+const { copy, isSupported } = useClipboard({ source })
+// 动态行个数计算
+const dynamicCount = (arr: string[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
 const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
+// 动态颜色计算
+const dynamicColor = (index: number, arr: string[], len: number) =>
+	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
@@ -159,6 +128,7 @@ const songzh: {
 		.sort((a, b) => a.localeCompare(b, 'zh')),
 	song_eng: uniq(songs.eng).sort()
 }
+// 长度膨胀，超过11个字符，视为两个元素
 const dynamicLen = (arr: string[]) => arr.filter((a: string) => convLen(a) > 11).length + arr.length
 // 歌名小于5的部分
 for (let i = 1; i <= 5; i++)
@@ -176,6 +146,7 @@ const resize = () => {
 	const xdom: HTMLDivElement = document.getElementsByClassName('song-main')[0] as HTMLDivElement
 	xdom && (wwidth.value = xdom.offsetWidth)
 }
+// 剪贴板
 const copySong = (v: string) => {
 	if (isSupported) {
 		copy(`点歌 ${v}`)
@@ -192,6 +163,47 @@ const copySong = (v: string) => {
 }
 watch(() => width.value, resize)
 onMounted(resize)
+
+// type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
+// const TYPE_ENUMS = {
+// 	0: '华语',
+// 	1: '其他语言',
+// 	2: '流行',
+// 	3: '民谣',
+// 	4: '古风',
+// 	5: 'R&B',
+// 	6: 'Rap'
+// }
+// const TAG_ENUMS = {
+// 	0: 'NEW',
+// 	1: 'SC点歌',
+// 	2: '舰长'
+// }
+import songs1 from '@/assets/unknown'
+import songs2 from '@/assets/named'
+const eng = [...songs1, ...songs2].filter((s) => s.type.includes(1))
+const zh = [...songs1, ...songs2].filter((s) => s.type.includes(0))
+// 最终组装
+type Song = {
+	song: string
+	type: number[]
+	tag: number[]
+	singer: string
+}
+const songzh1: {
+	[key: string]: Song[]
+} = {
+	// 歌名长度大于5作它集，按拼音排序
+	song_other: uniq(zh)
+		.filter((c) => convLen(c.song) > 5)
+		.sort((a, b) => a.song.localeCompare(b.song, 'pinyin')),
+	song_eng: uniq(eng).sort((a, b) => a.song.localeCompare(b.song))
+}
+for (let i = 1; i <= 5; i++)
+	songzh1[`song_${i}`] = uniq(zh)
+		.filter((c) => convLen(c.song) === i)
+		.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
+console.log('🚀 ~ songzh1:', songzh1)
 </script>
 
 <style lang="scss" scoped>

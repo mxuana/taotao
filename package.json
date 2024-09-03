@@ -1,5 +1,5 @@
 {
-	"name": "Kuromia",
+	"name": "kuromia-oxr",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -8,7 +8,7 @@
 		"build": "vue-tsc -b && vite build",
 		"staging": "vue-tsc -b && vite build --mode staging",
 		"preview": "vite preview",
-		"gener": "ts-node ./src/assets/mat"
+		"gener": "node ./src/assets/mat.js"
 	},
 	"dependencies": {
 		"@element-plus/icons-vue": "^2.3.1",
