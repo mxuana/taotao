@@ -33,6 +33,15 @@ export const constantRoutes: RouteRecordRaw[] = [
 		}
 	},
 	{
+		name: 'SongListObj',
+		path: '/song-list-obj',
+		component: () => import('@/views/song-list/index-obj.vue'),
+		meta: {
+			title: '新歌单',
+			icon: 'Tickets'
+		}
+	},
+	{
 		name: 'ChenZai',
 		path: '/chenzai',
 		component: () => import('@/views/chenzai/index.vue'),

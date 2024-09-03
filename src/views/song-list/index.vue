@@ -163,47 +163,6 @@ const copySong = (v: string) => {
 }
 watch(() => width.value, resize)
 onMounted(resize)
-
-// type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
-// const TYPE_ENUMS = {
-// 	0: '华语',
-// 	1: '其他语言',
-// 	2: '流行',
-// 	3: '民谣',
-// 	4: '古风',
-// 	5: 'R&B',
-// 	6: 'Rap'
-// }
-// const TAG_ENUMS = {
-// 	0: 'NEW',
-// 	1: 'SC点歌',
-// 	2: '舰长'
-// }
-import songs1 from '@/assets/unknown'
-import songs2 from '@/assets/named'
-const eng = [...songs1, ...songs2].filter((s) => s.type.includes(1))
-const zh = [...songs1, ...songs2].filter((s) => s.type.includes(0))
-// 最终组装
-type Song = {
-	song: string
-	type: number[]
-	tag: number[]
-	singer: string
-}
-const songzh1: {
-	[key: string]: Song[]
-} = {
-	// 歌名长度大于5作它集，按拼音排序
-	song_other: uniq(zh)
-		.filter((c) => convLen(c.song) > 5)
-		.sort((a, b) => a.song.localeCompare(b.song, 'pinyin')),
-	song_eng: uniq(eng).sort((a, b) => a.song.localeCompare(b.song))
-}
-for (let i = 1; i <= 5; i++)
-	songzh1[`song_${i}`] = uniq(zh)
-		.filter((c) => convLen(c.song) === i)
-		.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
-console.log('🚀 ~ songzh1:', songzh1)
 </script>
 
 <style lang="scss" scoped>
