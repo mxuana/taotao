@@ -637,6 +637,12 @@ export default [
 			tag: 2
 		},
 		{
+			song: '胡桃夹子',
+			type: [0, 2],
+			singer: '张碧晨',
+			tag: null
+		},
+		{
 			song: '那么骄傲',
 			type: [0, 2],
 			singer: '金海心',

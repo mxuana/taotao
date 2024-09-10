@@ -1,3 +1,22 @@
+/*
+const TAG_ENUMS: { [key: number]: { label: string; color: string } } = {
+	3: { label: 'NEW', color: '#58c147' },
+	1: { label: 'SC', color: '#ff9a8b' },
+	2: { label: '舰长', color: '#66bbf9' }
+}
+*/
+/*
+type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
+const TYPE_ENUMS: { [key: number]: string } = {
+	0: '华语',
+	1: '其他语言',
+	2: '流行',
+	3: '民谣',
+	4: '古风',
+	5: 'R&B',
+	6: 'Rap'
+}
+*/
 export default [
 	{
 		song: 'Fly',
@@ -907,12 +926,6 @@ export default [
 	},
 	{
 		song: '再见深海',
-		type: [0],
-		singer: '',
-		tag: null
-	},
-	{
-		song: '胡桃夹子',
 		type: [0],
 		singer: '',
 		tag: null

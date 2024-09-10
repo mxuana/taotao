@@ -28,16 +28,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 		path: '/song-list',
 		component: () => import('@/views/song-list/index.vue'),
 		meta: {
-			title: '歌单',
-			icon: 'Tickets'
-		}
-	},
-	{
-		name: 'SongListObj',
-		path: '/song-list-obj',
-		component: () => import('@/views/song-list/index-pre.vue'),
-		meta: {
-			title: '旧歌单',
+			title: '库洛米娅',
 			icon: 'Tickets'
 		}
 	},
@@ -46,7 +37,16 @@ export const constantRoutes: RouteRecordRaw[] = [
 		path: '/chenzai',
 		component: () => import('@/views/chenzai/index.vue'),
 		meta: {
-			title: '晨仔歌单',
+			title: '一只晨仔',
+			icon: 'Tickets'
+		}
+	},
+	{
+		name: 'TuTu',
+		path: '/tutu',
+		component: () => import('@/views/tutu/index.vue'),
+		meta: {
+			title: '古兔希尤',
 			icon: 'Tickets'
 		}
 	},
