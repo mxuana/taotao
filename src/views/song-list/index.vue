@@ -107,6 +107,7 @@
 									'max-width': iw(11) / 16 + 'rem',
 									color: color[dynamicColor(index, songzh[`song_${k}`], 11)]
 								}"
+								@click="copySong(item)"
 							>
 								{{ item.song }}
 							</el-tag>
