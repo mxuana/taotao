@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import type { Song } from '@/components/song-list/type'
-import slogan from '@/assets/songs/achi/bgc.png'
-import songs from '@/assets/songs/achi'
-import specSongs from '@/assets/songs/achi/spec'
+import slogan from '@/assets/songs/aurora/bgc.png'
+import songs from '@/assets/songs/aurora'
+import specSongs from '@/assets/songs/aurora/spec'
 const isongs = songs as Song[]
 const iSpecsongs = specSongs as Song[]
 </script>

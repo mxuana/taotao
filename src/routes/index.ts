@@ -42,18 +42,18 @@ export const constantRoutes: RouteRecordRaw[] = [
 		}
 	},
 	{
-		name: 'TuTu',
-		path: '/tutu',
-		component: () => import('@/views/tutu/index.vue'),
+		name: 'GoToSeeU',
+		path: '/gotoseeu',
+		component: () => import('@/views/gotoseeu/index.vue'),
 		meta: {
 			title: '古兔希尤',
 			icon: 'Tickets'
 		}
 	},
 	{
-		name: 'Achi',
-		path: '/achi',
-		component: () => import('@/views/achi/index.vue'),
+		name: 'Aurora',
+		path: '/aurora',
+		component: () => import('@/views/aurora/index.vue'),
 		meta: {
 			title: '阿池',
 			icon: 'Tickets'
