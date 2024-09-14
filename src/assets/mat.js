@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import songs from './tutu.js'
+import { oth as songs } from './achi.js'
 const data = []
 // type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
 export const TYPE_ENUMS = {
@@ -47,7 +47,6 @@ Object.keys(songs).forEach((k) => {
 	)
 })
 // fs.writeFileSync(path.join('src', 'assets', 'datatutu.json'), JSON.stringify(data))
-import chenzaisongs from './songs-chenzai.js'
 const typer = (s) =>
 	s
 		.split('；')
@@ -56,15 +55,9 @@ const typer = (s) =>
 		.map((m) => +m)
 		.sort()
 
-const data1 = chenzaisongs.data.map((s) => ({
-	song: s['歌曲'],
-	type: typer(s['类型']),
-	singer: s['歌手'],
-	tag: TAGS[s['备注']] || null
-}))
+import data1 from './songs/chenzai/index.js'
 
 // fs.writeFileSync(path.join('src', 'assets', 'chenzaidata.json'), JSON.stringify(data1))
-console.log(data1)
 data.forEach((d) => {
 	const dt = data1.find((b) => b.song === d.song)
 	if (dt) {
@@ -73,5 +66,5 @@ data.forEach((d) => {
 	}
 })
 console.log(data)
-fs.writeFileSync(path.join('src', 'assets', 'datatutu.json'), JSON.stringify(data))
+fs.writeFileSync(path.join('src', 'assets', 'dataachioth.json'), JSON.stringify(data))
 // fs.writeFileSync(path.join('src', 'assets', 'chenzaidata.json'), JSON.stringify(data1))

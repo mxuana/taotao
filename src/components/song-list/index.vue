@@ -1,9 +1,6 @@
 <template>
 	<div class="song-content">
-		<el-card
-			class="slogan"
-			:style="{ background: `url(${slogan})`, '--avater': `url(${avater}) no-repeat 8% bottom` }"
-		>
+		<el-card class="slogan" :style="{ '--slogan': `url(${slogan})` }">
 			<div
 				class="logo"
 				:style="{
@@ -12,10 +9,10 @@
 					height: logo.height
 				}"
 			>
-				KUROMIA
+				{{ vup }}
 			</div>
 			<div>
-				<div class="logo-cn">${{ logoCn }}</div>
+				<div class="logo-cn">{{ logoCn }}</div>
 				<div
 					style="
 						text-align: right;
@@ -28,163 +25,165 @@
 				</div>
 			</div>
 			<SvgIcon
-				name="avater"
+				:name="avater"
 				width="70"
 				height="70"
 				is="v-fragment"
 				:in-style="{ top: '100px', position: 'absolute' }"
 			/>
 		</el-card>
-		<el-tabs v-model="itype" class="song-tabs">
-			<el-tab-pane label="按歌名" name="song">
-				<el-card v-for="i in 5" class="song-list">
-					<el-space
-						class="song-main"
-						wrap
-						alignment="start"
-						direction="vertical"
-						:size="[3, 0]"
-						:style="{
-							// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
-							height: (dynamicCount(songzh[`song_${i}`], i) * ih) / 16 + 'rem'
-						}"
-					>
-						<template v-for="(item, index) in songzh[`song_${i}`]">
-							<div class="song-border">
-								<el-badge
-									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
-									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
-									:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
-									:badge-style="{
-										color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
-										fontSize: '9px',
-										borderWidth: 0
-									}"
-									:offset="[-16, 5]"
-								>
-									<el-tag
-										class="song-item"
-										disable-transitions
-										type="info"
-										:color="color[dynamicColor(index, songzh[`song_${i}`], i)] + '11' || '#a2d3ff'"
-										:style="{
-											'border-left': `5px ${
-												// 按列序取颜色
-												color[dynamicColor(index, songzh[`song_${i}`], i)] + '44' || '#a2d3ff'
-											} solid`,
-											color: color[dynamicColor(index, songzh[`song_${i}`], i)]
-										}"
-										@click="copySong(item)"
-									>
-										{{ item.song }}
-									</el-tag>
-								</el-badge>
-							</div>
-						</template>
-					</el-space>
-				</el-card>
-				<el-card class="song-list" v-for="k in ['other', 'eng']">
-					<el-space
-						class="song-main"
-						wrap
-						alignment="start"
-						direction="vertical"
-						:size="[3, 0]"
-						:style="{
-							height: (dynamicCount(songzh[`song_${k}`], 11) * ih + 34 / 2) / 16 + 'rem'
-						}"
-					>
-						<template v-for="(item, index) in songzh[`song_${k}`]">
-							<div class="song-border">
-								<el-badge
-									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
-									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
-									:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
-									:badge-style="{
-										color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
-										fontSize: '9px',
-										borderWidth: 0
-									}"
-									:offset="[-16, 5]"
-								>
-									<el-tag
-										class="song-item"
-										disable-transitions
-										type="info"
-										:color="color[dynamicColor(index, songzh[`song_${k}`], 11)] + '11' || '#a2d3ff'"
-										:style="{
-											'border-left': `5px ${
-												color[dynamicColor(index, songzh[`song_${k}`], 11)] + '44' || '#a2d3ff'
-											} solid`,
-											// 设单个歌名最大长度为11个汉字
-											'max-width': iw(11) / 16 + 'rem',
-											color: color[dynamicColor(index, songzh[`song_${k}`], 11)]
-										}"
-										@click="copySong(item)"
-									>
-										{{ item.song }}
-									</el-tag>
-								</el-badge>
-							</div>
-						</template>
-					</el-space>
-				</el-card>
-			</el-tab-pane>
+		<el-tabs v-if="tab" v-model="itype" class="song-tabs">
+			<el-tab-pane label="按歌名" name="song"> </el-tab-pane>
 			<el-tab-pane label="按歌手" name="singer">
-				<div
-					wrap
-					class="singer-item"
-					v-for="singer in [
-						...Object.keys(gsong)
-							.filter((k) => !!k)
-							.sort((a, b) => a.localeCompare(b, 'pinyin', { sensitivity: 'accent' })),
-						''
-					]"
-				>
-					<span class="singer">{{ singer }}:&emsp;</span>
-					<el-tag
-						class="song-item"
-						disable-transitions
-						v-for="song in gsong[singer].sort((a, b) =>
-							a.song.localeCompare(b.song, 'pinyin', { sensitivity: 'accent' })
-						)"
-						@click="copySong(song)"
-					>
-						{{ song.song }}
-					</el-tag>
-				</div>
+				<template v-for="singer in singers">
+					<div wrap class="singer-item" v-if="gsong[singer]">
+						<span class="singer">{{ singer }}:&emsp;</span>
+						<el-tag
+							class="song-item"
+							disable-transitions
+							v-for="song in gsong[singer].sort((a, b) =>
+								a.song.localeCompare(b.song, 'pinyin', { sensitivity: 'accent' })
+							)"
+							@click="copySong(song)"
+						>
+							{{ song.song }}
+						</el-tag>
+					</div>
+				</template>
 			</el-tab-pane>
 		</el-tabs>
+		<div v-else id="default-song"></div>
+		<Teleport :to="tab ? '#pane-song' : '#default-song'" defer>
+			<el-card v-for="i in 5" class="song-list">
+				<el-space
+					class="song-main"
+					wrap
+					alignment="start"
+					direction="vertical"
+					:size="[3, 0]"
+					:style="{
+						// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
+						height: (dynamicCount(songzh[`song_${i}`], i) * ih) / 16 + 'rem'
+					}"
+				>
+					<template v-for="(item, index) in songzh[`song_${i}`]">
+						<div class="song-border">
+							<el-badge
+								:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
+								:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
+								:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
+								:badge-style="{
+									color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
+									fontSize: '9px',
+									borderWidth: 0
+								}"
+								:offset="[-16, 5]"
+							>
+								<el-tag
+									class="song-item"
+									disable-transitions
+									type="info"
+									:color="
+										(theme
+											? theme
+											: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') + '11'
+									"
+									@click="copySong(item)"
+									:style="{
+										'border-left': `5px ${
+											// 按列序取颜色
+											(theme
+												? theme
+												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
+											'44'
+										} solid`,
+										color: theme
+											? theme
+											: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff'
+									}"
+								>
+									{{ item.song }}
+								</el-tag>
+							</el-badge>
+						</div>
+					</template>
+				</el-space>
+			</el-card>
+			<el-card class="song-list" v-for="k in ['other', 'eng']">
+				<el-space
+					class="song-main"
+					wrap
+					alignment="start"
+					direction="vertical"
+					:size="[3, 0]"
+					:style="{
+						height: (dynamicCount(songzh[`song_${k}`], 11) * ih + 34 / 2) / 16 + 'rem'
+					}"
+				>
+					<template v-for="(item, index) in songzh[`song_${k}`]">
+						<div class="song-border">
+							<el-badge
+								:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
+								:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
+								:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
+								:badge-style="{
+									color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
+									fontSize: '9px',
+									borderWidth: 0
+								}"
+								:offset="[-16, 5]"
+							>
+								<el-tag
+									class="song-item"
+									disable-transitions
+									type="info"
+									:color="
+										(theme
+											? theme
+											: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff') + '11'
+									"
+									:style="{
+										'border-left': `5px ${
+											(theme
+												? theme
+												: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff') +
+											'44'
+										} solid`,
+										// 设单个歌名最大长度为11个汉字
+										'max-width': iw(11) / 16 + 'rem',
+										color: theme
+											? theme
+											: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff'
+									}"
+									@click="copySong(item)"
+								>
+									{{ item.song }}
+								</el-tag>
+							</el-badge>
+						</div>
+					</template>
+				</el-space>
+			</el-card>
+		</Teleport>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { floor, ceil, uniq, min, max, groupBy } from 'lodash-es'
+import { floor, ceil, uniqBy, min, max, groupBy } from 'lodash-es'
 import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useClipboard } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
-interface Logo {
-	fontFamily: string
-	fontSize: string
-	height: string
-}
-type Song = {
-	song: string
-	type: number[]
-	tag: number | null
-	singer: string
-}
-type SongList = {
-	avater: string
-	slogan: string
-	logo: Logo
-	logoCn: string
-	songs: Song[]
-}
+import type { Song, SongList } from './type'
 const props = withDefaults(defineProps<SongList>(), {
+	vip: '---',
 	slogan: '',
-	logo: () => ({ fontFamily: 'BEYNO', fontSize: '2.7rem', height: '5rem' })
+	avater: '',
+	songs: () => [] as Song[],
+	logo: () => ({ fontFamily: 'BEYNO', fontSize: '2.7rem', height: '5rem' }),
+	logoCn: '---',
+	theme: '',
+	tab: true
 })
 const source = ref('---')
 const { copy, isSupported } = useClipboard({ source })
@@ -192,12 +191,12 @@ const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
 // 单个高（px）
 const ih = 34
 // 宽度计算（px）
-const iw = (clen: number) => max([33.5 + 12 * min([clen < 4 ? 4 : clen, 12])!, 80])!
+const iw = (clen: number) => max([33.5 + 12.5 * min([clen < 4 ? 4 : clen, 12])!, 80])!
 // 动态颜色计算
 const dynamicColor = (index: number, arr: Song[], len: number) =>
 	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
 // 动态行个数计算
-const dynamicCount = (arr: Song[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
+const dynamicCount = (arr = [] as Song[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
@@ -224,14 +223,13 @@ const TAG_ENUMS: { [key: number]: { label: string; color: string } } = {
 	1: { label: 'SC', color: '#ff9a8b' },
 	2: { label: '舰长', color: '#66bbf9' }
 }
-
+type Songs = {
+	[key: string]: Song[]
+}
 // 最终组装
-const songzh = reactive<{
-	[key: string]: Song[]
-}>({})
-const gsong = ref<{
-	[key: string]: Song[]
-}>({})
+let songzh: Songs = {}
+let gsong: Songs = {}
+let singers: string[] = []
 // 歌名小于5的部分
 // 父容器宽，默认取视口宽
 watch(
@@ -240,16 +238,26 @@ watch(
 		if (n.length) {
 			const eng = n.filter((s) => s.type.includes(1))
 			const zh = n.filter((s) => s.type.includes(0))
+			const isongzh: Songs = {}
 			// 最终组装
-			songzh.song_other = uniq(zh)
+			isongzh.song_other = uniqBy(zh, 'song')
 				.filter((c) => convLen(c.song) > 5)
 				.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
-			songzh.song_eng = uniq(eng).sort((a, b) => a.song.localeCompare(b.song))
+			isongzh.song_eng = uniqBy(eng, 'song').sort((a, b) => a.song.localeCompare(b.song))
 			for (let i = 1; i <= 5; i++)
-				songzh[`song_${i}`] = uniq(zh)
+				isongzh[`song_${i}`] = uniqBy(zh, 'song')
 					.filter((c) => convLen(c.song) === i)
 					.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
-			gsong.value = groupBy(n, (s) => s.singer)
+			const igsong = groupBy(n, (s) => s.singer)
+			songzh = isongzh
+			gsong = igsong
+			const isingers = [
+				...Object.keys(igsong)
+					.filter((k) => !!k)
+					.sort((a, b) => a.localeCompare(b, 'pinyin', { sensitivity: 'accent' })),
+				''
+			]
+			singers = isingers
 		}
 	},
 	{
@@ -280,18 +288,14 @@ const copySong = (v: Song) => {
 }
 const itype = ref('song')
 watch(() => width.value, resize)
-onMounted(resize)
+onMounted(() => {
+	resize()
+})
 </script>
 
 <style lang="scss" scoped>
 @import './index.scss';
-.slogan::before {
-	content: '';
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: var(--avater);
-	background-size: 22%;
-	z-index: -1;
+.slogan {
+	background: var(--slogan);
 }
 </style>

@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 export const constantRoutes: RouteRecordRaw[] = [
 	{
 		path: '/',
-		redirect: '/song-list',
+		redirect: '/chenzai',
 		meta: { hidden: true }
 	},
 	{
@@ -47,6 +47,15 @@ export const constantRoutes: RouteRecordRaw[] = [
 		component: () => import('@/views/tutu/index.vue'),
 		meta: {
 			title: '古兔希尤',
+			icon: 'Tickets'
+		}
+	},
+	{
+		name: 'Achi',
+		path: '/achi',
+		component: () => import('@/views/achi/index.vue'),
+		meta: {
+			title: '阿池',
 			icon: 'Tickets'
 		}
 	},

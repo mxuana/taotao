@@ -1,6 +1,16 @@
 @media screen and (orientation: landscape) {
+	.song-content {
+		padding: 0 25%;
+		margin: 0 auto;
+	}
 	:deep(.el-card__body) {
 		padding: 0.9375rem;
+	}
+}
+@media screen and (orientation: portrait) {
+	.song-content {
+		padding: 0.9375rem;
+		margin: 0 auto;
 	}
 }
 .el-space {
@@ -8,10 +18,9 @@
 }
 
 .song-content {
-	padding: 0.9375rem;
+	background-size: 3.5356rem 3.5356rem;
 	.slogan {
 		margin: 0 auto;
-		background: url(@/assets/cool-background.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 		position: relative;
@@ -70,4 +79,7 @@
 	font-size: 0.75rem;
 	margin-left: 3px;
 	color: #b7b7b7;
+}
+#default-song {
+	margin-top: 20px;
 }

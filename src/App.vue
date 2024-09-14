@@ -18,7 +18,7 @@
 			>
 		</el-menu>
 	</el-drawer>
-	<div style="text-align: right">
+	<div class="menu-btn" style="text-align: right">
 		<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
 	</div>
 </template>
