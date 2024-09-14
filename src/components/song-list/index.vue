@@ -1,9 +1,21 @@
 <template>
 	<div class="song-content">
-		<el-card class="slogan">
-			<div class="logo">KUROMIA</div>
+		<el-card
+			class="slogan"
+			:style="{ background: `url(${slogan})`, '--avater': `url(${avater}) no-repeat 8% bottom` }"
+		>
+			<div
+				class="logo"
+				:style="{
+					'font-family': logo.fontFamily,
+					'font-size': logo.fontSize,
+					height: logo.height
+				}"
+			>
+				KUROMIA
+			</div>
 			<div>
-				<div class="logo-cn">库洛米娅</div>
+				<div class="logo-cn">${{ logoCn }}</div>
 				<div
 					style="
 						text-align: right;
@@ -152,9 +164,28 @@ import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useClipboard } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
-import songs1 from '@/assets/unknown'
-import songs2 from '@/assets/named'
-
+interface Logo {
+	fontFamily: string
+	fontSize: string
+	height: string
+}
+type Song = {
+	song: string
+	type: number[]
+	tag: number | null
+	singer: string
+}
+type SongList = {
+	avater: string
+	slogan: string
+	logo: Logo
+	logoCn: string
+	songs: Song[]
+}
+const props = withDefaults(defineProps<SongList>(), {
+	slogan: '',
+	logo: () => ({ fontFamily: 'BEYNO', fontSize: '2.7rem', height: '5rem' })
+})
 const source = ref('---')
 const { copy, isSupported } = useClipboard({ source })
 const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
@@ -193,30 +224,39 @@ const TAG_ENUMS: { [key: number]: { label: string; color: string } } = {
 	1: { label: 'SC', color: '#ff9a8b' },
 	2: { label: '舰长', color: '#66bbf9' }
 }
-const eng = [...songs1, ...songs2].filter((s) => s.type.includes(1))
-const zh = [...songs1, ...songs2].filter((s) => s.type.includes(0))
+
 // 最终组装
-type Song = {
-	song: string
-	type: number[]
-	tag: number | null
-	singer: string
-}
-const songzh: {
+const songzh = reactive<{
 	[key: string]: Song[]
-} = {
-	// 歌名长度大于5作它集，按拼音排序
-	song_other: uniq(zh)
-		.filter((c) => convLen(c.song) > 5)
-		.sort((a, b) => a.song.localeCompare(b.song, 'pinyin')),
-	song_eng: uniq(eng).sort((a, b) => a.song.localeCompare(b.song))
-}
+}>({})
+const gsong = ref<{
+	[key: string]: Song[]
+}>({})
 // 歌名小于5的部分
-for (let i = 1; i <= 5; i++)
-	songzh[`song_${i}`] = uniq(zh)
-		.filter((c) => convLen(c.song) === i)
-		.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
 // 父容器宽，默认取视口宽
+watch(
+	() => props.songs,
+	(n, _) => {
+		if (n.length) {
+			const eng = n.filter((s) => s.type.includes(1))
+			const zh = n.filter((s) => s.type.includes(0))
+			// 最终组装
+			songzh.song_other = uniq(zh)
+				.filter((c) => convLen(c.song) > 5)
+				.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
+			songzh.song_eng = uniq(eng).sort((a, b) => a.song.localeCompare(b.song))
+			for (let i = 1; i <= 5; i++)
+				songzh[`song_${i}`] = uniq(zh)
+					.filter((c) => convLen(c.song) === i)
+					.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
+			gsong.value = groupBy(n, (s) => s.singer)
+		}
+	},
+	{
+		immediate: true,
+		deep: true
+	}
+)
 const wwidth = ref(window.innerWidth)
 const { width } = useWindowSize()
 const resize = () => {
@@ -239,11 +279,19 @@ const copySong = (v: Song) => {
 	}
 }
 const itype = ref('song')
-const gsong = groupBy([...songs1, ...songs2], (s) => s.singer)
 watch(() => width.value, resize)
 onMounted(resize)
 </script>
 
 <style lang="scss" scoped>
 @import './index.scss';
+.slogan::before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: var(--avater);
+	background-size: 22%;
+	z-index: -1;
+}
 </style>
