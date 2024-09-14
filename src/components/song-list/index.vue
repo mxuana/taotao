@@ -109,61 +109,64 @@
 					</template>
 				</el-space>
 			</el-card>
-			<el-card class="song-list" v-for="k in ['other', 'eng']">
-				<el-space
-					class="song-main"
-					wrap
-					alignment="start"
-					direction="vertical"
-					:size="[3, 0]"
-					:style="{
-						height: (dynamicCount(songzh[`song_${k}`], 11) * ih + 34 / 2) / 16 + 'rem'
-					}"
-				>
-					<template v-for="(item, index) in songzh[`song_${k}`]">
-						<div class="song-border">
-							<el-badge
-								:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
-								:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
-								:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
-								:badge-style="{
-									color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
-									fontSize: '9px',
-									borderWidth: 0
-								}"
-								:offset="[-16, 5]"
-							>
-								<el-tag
-									class="song-item"
-									disable-transitions
-									type="info"
-									:color="
-										(theme
-											? theme
-											: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff') + '11'
-									"
-									:style="{
-										'border-left': `5px ${
+			<template v-for="k in ['other', 'spec', 'eng']">
+				<el-card class="song-list" v-if="songzh[`song_${k}`]">
+					<el-space
+						class="song-main"
+						wrap
+						alignment="start"
+						direction="vertical"
+						:size="[3, 0]"
+						:style="{
+							height: (dynamicCount(songzh[`song_${k}`], 11) * ih + 34 / 2) / 16 + 'rem'
+						}"
+					>
+						<template v-for="(item, index) in songzh[`song_${k}`]">
+							<div class="song-border">
+								<el-badge
+									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
+									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
+									:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
+									:badge-style="{
+										color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
+										fontSize: '9px',
+										borderWidth: 0
+									}"
+									:offset="[-16, 5]"
+								>
+									<el-tag
+										class="song-item"
+										disable-transitions
+										type="info"
+										:color="
 											(theme
 												? theme
 												: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff') +
-											'44'
-										} solid`,
-										// 设单个歌名最大长度为11个汉字
-										'max-width': iw(11) / 16 + 'rem',
-										color: theme
-											? theme
-											: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff'
-									}"
-									@click="copySong(item)"
-								>
-									{{ item.song }}
-								</el-tag>
-							</el-badge>
-						</div>
-					</template>
-				</el-space>
-			</el-card>
+											'11'
+										"
+										:style="{
+											'border-left': `5px ${
+												(theme
+													? theme
+													: color[dynamicColor(index, songzh[`song_${k}`], 11)] ||
+													  '#a2d3ff') + '44'
+											} solid`,
+											// 设单个歌名最大长度为11个汉字
+											'max-width': iw(11) / 16 + 'rem',
+											color: theme
+												? theme
+												: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff'
+										}"
+										@click="copySong(item)"
+									>
+										{{ item.song }}
+									</el-tag>
+								</el-badge>
+							</div>
+						</template>
+					</el-space>
+				</el-card>
+			</template>
 		</Teleport>
 	</div>
 </template>
@@ -180,6 +183,7 @@ const props = withDefaults(defineProps<SongList>(), {
 	slogan: '',
 	avater: '',
 	songs: () => [] as Song[],
+	specSongs: () => [],
 	logo: () => ({ fontFamily: 'BEYNO', fontSize: '2.7rem', height: '5rem' }),
 	logoCn: '---',
 	theme: '',
@@ -233,8 +237,8 @@ let singers: string[] = []
 // 歌名小于5的部分
 // 父容器宽，默认取视口宽
 watch(
-	() => props.songs,
-	(n, _) => {
+	() => [props.songs, props.specSongs],
+	([n, s], _) => {
 		if (n.length) {
 			const eng = n.filter((s) => s.type.includes(1))
 			const zh = n.filter((s) => s.type.includes(0))
@@ -248,6 +252,10 @@ watch(
 				isongzh[`song_${i}`] = uniqBy(zh, 'song')
 					.filter((c) => convLen(c.song) === i)
 					.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
+			if (s.length) {
+				const ispec = uniqBy(s, 'song').sort((a, b) => a.song.localeCompare(b.song))
+				isongzh.song_spec = ispec
+			}
 			const igsong = groupBy(n, (s) => s.singer)
 			songzh = isongzh
 			gsong = igsong

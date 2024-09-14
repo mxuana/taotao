@@ -19,4 +19,5 @@ export type SongList = {
 	songs: Song[]
 	theme?: string
 	tab?: boolean
+	specSongs?: Song[]
 }

@@ -1,6 +1,7 @@
 <template>
 	<SongList
 		:songs="isongs"
+		:spec-songs="iSpecsongs"
 		:slogan="slogan"
 		avater="tutux"
 		vup="AURORA"
@@ -14,7 +15,9 @@
 import type { Song } from '@/components/song-list/type'
 import slogan from '@/assets/songs/achi/bgc.png'
 import songs from '@/assets/songs/achi'
+import specSongs from '@/assets/songs/achi/spec'
 const isongs = songs as Song[]
+const iSpecsongs = specSongs as Song[]
 </script>
 
 <style lang="scss" scoped>
