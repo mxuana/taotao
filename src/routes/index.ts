@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 export const constantRoutes: RouteRecordRaw[] = [
 	{
 		path: '/',
-		redirect: '/chenzai',
+		redirect: '/song-list',
 		meta: { hidden: true }
 	},
 	{
