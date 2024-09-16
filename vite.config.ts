@@ -71,11 +71,6 @@ export default defineConfig(({ mode }) => {
 				custom: {
 					families: [
 						{
-							name: 'Bianlidian',
-							local: 'Bianlidian',
-							src: './src/assets/fonts/Bianlidian.ttf'
-						},
-						{
 							name: 'CanelaBarkBoldPersonal',
 							local: 'CanelaBarkBoldPersonal',
 							src: './src/assets/fonts/CanelaBarkBoldPersonal.ttf'
