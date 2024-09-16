@@ -79,6 +79,11 @@ export default defineConfig(({ mode }) => {
 							name: 'CanelaBarkBoldPersonal',
 							local: 'CanelaBarkBoldPersonal',
 							src: './src/assets/fonts/CanelaBarkBoldPersonal.ttf'
+						},
+						{
+							name: 'BEYNO',
+							local: 'BEYNO',
+							src: './src/assets/fonts/BEYNO.ttf'
 						}
 					]
 				}

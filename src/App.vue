@@ -43,7 +43,7 @@ watch(
 )
 </script>
 <style lang="scss">
-@import url('@/assets/fonts/index.scss');
+// @import url('@/assets/fonts/index.scss');
 .menu-btn {
 	// position: fixed;
 	// right: 0;
