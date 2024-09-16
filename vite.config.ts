@@ -8,6 +8,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import svgLoader from 'vite-svg-loader'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import { vite as vidstack } from 'vidstack/plugins'
+import Unfonts from 'unplugin-fonts/vite'
 const INVALID_CHAR_REGEX = /[\x00-\x1F\x7F<>*#"{}|^[\]`;?:&=+$,]/g
 const DRIVE_LETTER_REGEX = /^[a-z]:/i
 // https://vitejs.dev/config/
@@ -65,6 +66,22 @@ export default defineConfig(({ mode }) => {
 			createSvgIconsPlugin({
 				iconDirs: [resolve(process.cwd(), 'src/assets/icons')],
 				symbolId: 'icon-[dir]-[name]'
+			}),
+			Unfonts({
+				custom: {
+					families: [
+						{
+							name: 'Bianlidian',
+							local: 'Bianlidian',
+							src: './src/assets/fonts/Bianlidian.ttf'
+						},
+						{
+							name: 'CanelaBarkBoldPersonal',
+							local: 'CanelaBarkBoldPersonal',
+							src: './src/assets/fonts/CanelaBarkBoldPersonal.ttf'
+						}
+					]
+				}
 			})
 		],
 		build: {

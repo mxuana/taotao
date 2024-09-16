@@ -2,6 +2,7 @@
 /// <reference types="vidstack/vue" />
 /// <reference types="chrome"/>
 /// <reference types="vite-svg-loader" />
+/// <reference types="unplugin-fonts/client" />
 interface ImportMetaEnv {
 	readonly VITE_APP_TITLE: string
 	// 更多环境变量...
