@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './routes'
 import 'normalize.css'
+import 'unfonts.css'
 import '@/routes/permission'
 import 'virtual:svg-icons-register'
 
