@@ -414,12 +414,6 @@ export default [
 		tag: null
 	},
 	{
-		song: '但愿人长久',
-		type: [0],
-		singer: '邓丽君',
-		tag: null
-	},
-	{
 		song: '偷故事的人',
 		type: [0],
 		singer: '张惠妹',
@@ -489,7 +483,7 @@ export default [
 		song: '但愿人长久',
 		type: [0],
 		singer: '邓丽君',
-		tag: 3
+		tag: null
 	},
 	{
 		song: '爱我的时候',
