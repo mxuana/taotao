@@ -79,6 +79,11 @@ export default defineConfig(({ mode }) => {
 							name: 'BEYNO',
 							local: 'BEYNO',
 							src: './src/assets/fonts/BEYNO.ttf'
+						},
+						{
+							name: 'FangSong',
+							local: 'FangSong',
+							src: './src/assets/fonts/FangSong.ttf'
 						}
 					]
 				}
