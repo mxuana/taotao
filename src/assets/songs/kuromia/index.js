@@ -486,6 +486,12 @@ export default [
 		tag: null
 	},
 	{
+		song: '但愿人长久',
+		type: [0],
+		singer: '邓丽君',
+		tag: 3
+	},
+	{
 		song: '爱我的时候',
 		type: [0],
 		singer: '周兴哲',
