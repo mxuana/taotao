@@ -26,10 +26,10 @@
 			</div>
 			<SvgIcon
 				:name="avater"
-				width="70"
-				height="70"
+				width="4.375rem"
+				height="4.375rem"
 				is="v-fragment"
-				:in-style="{ top: '100px', position: 'absolute' }"
+				:in-style="{ top: '5rem', position: 'absolute', 'border-radius': '.9375rem' }"
 			/>
 		</el-card>
 		<el-tabs v-if="tab" v-model="itype" class="song-tabs">
@@ -63,7 +63,7 @@
 					:size="[3, 0]"
 					:style="{
 						// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
-						height: (dynamicCount(songzh[`song_${i}`], i) * ih) / 16 + 'rem'
+						height: ceil((dynamicCount(songzh[`song_${i}`], i) * ih) / fz) + 'rem'
 					}"
 				>
 					<template v-for="(item, index) in songzh[`song_${i}`]">
@@ -90,7 +90,7 @@
 									"
 									@click="copySong(item)"
 									:style="{
-										'border-left': `5px ${
+										'border-left': `.3125rem ${
 											// 按列序取颜色
 											(theme
 												? theme
@@ -99,7 +99,8 @@
 										} solid`,
 										color: theme
 											? theme
-											: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff'
+											: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff',
+										width: iw(i) / fz + 'rem'
 									}"
 								>
 									{{ item.song }}
@@ -118,7 +119,7 @@
 						direction="vertical"
 						:size="[3, 0]"
 						:style="{
-							height: (dynamicCount(songzh[`song_${k}`], 11) * ih + 34 / 2) / 16 + 'rem'
+							height: (dynamicCount(songzh[`song_${k}`], 11) * ih + ih / 2) / fz + 'rem'
 						}"
 					>
 						<template v-for="(item, index) in songzh[`song_${k}`]">
@@ -152,7 +153,7 @@
 													  '#a2d3ff') + '44'
 											} solid`,
 											// 设单个歌名最大长度为11个汉字
-											'max-width': iw(11) / 16 + 'rem',
+											'max-width': iw(11) / fz + 'rem',
 											color: theme
 												? theme
 												: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff'
@@ -172,7 +173,7 @@
 </template>
 
 <script setup lang="ts">
-import { floor, ceil, uniqBy, min, max, groupBy } from 'lodash-es'
+import { floor, ceil, uniqBy, min, groupBy } from 'lodash-es'
 import { useWindowSize } from '@vueuse/core'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useClipboard } from '@vueuse/core'
@@ -192,10 +193,11 @@ const props = withDefaults(defineProps<SongList>(), {
 const source = ref('---')
 const { copy, isSupported } = useClipboard({ source })
 const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
+const fz = ref(16)
 // 单个高（px）
-const ih = 34
+const ih = ref(36.09)
 // 宽度计算（px）
-const iw = (clen: number) => max([33.5 + 12.5 * min([clen < 4 ? 4 : clen, 12])!, 80])!
+const iw = (clen: number) => ((32 + 14.53 * min([clen < 4 ? 4 : clen, 12])!)! / 16) * fz.value
 // 动态颜色计算
 const dynamicColor = (index: number, arr: Song[], len: number) =>
 	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
@@ -298,6 +300,9 @@ const itype = ref('song')
 watch(() => width.value, resize)
 onMounted(() => {
 	resize()
+	fz.value = +getComputedStyle(document.documentElement).getPropertyValue('font-size').replace('px', '')
+	ih.value = (ih.value / 16) * fz.value
+	console.log('🚀 ~ onMounted ~ ih:', ih.value)
 })
 </script>
 
