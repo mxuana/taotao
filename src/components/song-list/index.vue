@@ -61,7 +61,7 @@
 						wrap
 						alignment="start"
 						direction="vertical"
-						:size="[3, 0]"
+						:size="[0, 0]"
 						:style="{
 							// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
 							height: ceil((dynamicCount(songzh[`song_${i}`], i) * ih) / fz) + 'rem'
@@ -119,7 +119,7 @@
 						wrap
 						alignment="start"
 						direction="vertical"
-						:size="[3, 0]"
+						:size="[0, 0]"
 						:style="{
 							height: (dynamicCount(songzh[`song_${k}`], more) * ih) / fz + 'rem'
 						}"
