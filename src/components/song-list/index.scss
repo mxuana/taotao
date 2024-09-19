@@ -85,3 +85,10 @@
 .el-tag {
 	font-size: 0.875rem;
 }
+.el-badge {
+	:deep(.el-badge__content) {
+		margin-right: 1rem !important;
+		margin-top: 0.3125rem !important;
+		padding: 0.125rem var(--el-badge-padding);
+	}
+}

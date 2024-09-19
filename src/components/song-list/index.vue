@@ -121,7 +121,7 @@
 						direction="vertical"
 						:size="[0, 0]"
 						:style="{
-							height: (dynamicCount(songzh[`song_${k}`], more) * ih) / fz + 'rem'
+							height: (dynamicCount2(songzh[`song_${k}`], more) * ih) / fz + 'rem'
 						}"
 					>
 						<template v-for="(item, index) in songzh[`song_${k}`]">
@@ -144,21 +144,21 @@
 										:color="
 											(theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${k}`], more)] || '#a2d3ff') +
+												: color[dynamicColor2(index, songzh[`song_${k}`], more)] || '#a2d3ff') +
 											'11'
 										"
 										:style="{
 											'border-left': `.3125rem ${
 												(theme
 													? theme
-													: color[dynamicColor(index, songzh[`song_${k}`], more)] ||
+													: color[dynamicColor2(index, songzh[`song_${k}`], more)] ||
 													  '#a2d3ff') + '44'
 											} solid`,
 											// 设单个歌名最大长度为more个汉字
 											'max-width': iw(more) / fz + 'rem',
 											color: theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${k}`], more)] || '#a2d3ff'
+												: color[dynamicColor2(index, songzh[`song_${k}`], more)] || '#a2d3ff'
 										}"
 										@click="copySong(item)"
 									>
@@ -204,6 +204,8 @@ const more = 9
 const iw = (clen: number) => ((32 + 14.53 * min([clen < 4 ? 3.5 : clen, 12])!)! / 16) * fz.value
 // 动态颜色计算
 const dynamicColor = (index: number, arr: Song[], len: number) =>
+	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
+const dynamicColor2 = (index: number, arr: Song[], len: number) =>
 	(ceil((index + 1) / dynamicCount2(arr, len)) - 1) % color.length
 // 动态行个数计算
 const dynamicCount = (arr = [] as Song[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
@@ -222,6 +224,7 @@ const dynamicLen = (arr: Song[]) =>
 
 const dynamicLen2 = (arr: Song[]) =>
 	floor((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
+
 // type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
 // const TYPE_ENUMS: { [key: number]: string } = {
 // 	0: '华语',
@@ -246,6 +249,8 @@ let gsong: Songs = {}
 let singers: string[] = []
 // 歌名小于5的部分
 // 父容器宽，默认取视口宽
+const biuldRow = (arr: Song[]) => arr.map((a) => ({ ...a, row: convLen(a.song) > more ? 2 : 1 }))
+
 watch(
 	() => [props.songs, props.specSongs],
 	([n, s], _) => {
@@ -254,17 +259,21 @@ watch(
 			const zh = n.filter((s) => s.type.includes(0))
 			const isongzh: Songs = {}
 			// 最终组装
-			isongzh.song_other = uniqBy(zh, 'song')
-				.filter((c) => convLen(c.song) > 5)
-				.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
-			isongzh.song_eng = uniqBy(eng, 'song').sort((a, b) => a.song.localeCompare(b.song))
-			for (let i = 1; i <= 5; i++)
-				isongzh[`song_${i}`] = uniqBy(zh, 'song')
-					.filter((c) => convLen(c.song) === i)
+			isongzh.song_other = biuldRow(
+				uniqBy(zh, 'song')
+					.filter((c) => convLen(c.song) > 5)
 					.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
+			)
+			isongzh.song_eng = biuldRow(uniqBy(eng, 'song').sort((a, b) => a.song.localeCompare(b.song)))
+			for (let i = 1; i <= 5; i++)
+				isongzh[`song_${i}`] = biuldRow(
+					uniqBy(zh, 'song')
+						.filter((c) => convLen(c.song) === i)
+						.sort((a, b) => a.song.localeCompare(b.song, 'pinyin'))
+				)
 			if (s.length) {
 				const ispec = uniqBy(s, 'song').sort((a, b) => a.song.localeCompare(b.song))
-				isongzh.song_spec = ispec
+				isongzh.song_spec = biuldRow(ispec)
 			}
 			const igsong = groupBy(n, (s) => s.singer)
 			songzh = isongzh

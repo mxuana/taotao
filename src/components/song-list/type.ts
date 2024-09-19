@@ -8,6 +8,7 @@ export type Song = {
 	type: number[]
 	tag: number | null
 	singer: string
+	row?: number
 }
 
 export type SongList = {
