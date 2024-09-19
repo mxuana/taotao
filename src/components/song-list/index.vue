@@ -29,7 +29,7 @@
 				width="4.375rem"
 				height="4.375rem"
 				is="v-fragment"
-				:in-style="{ top: '5rem', position: 'absolute', 'border-radius': '.9375rem' }"
+				:in-style="{ top: '5.5rem', position: 'absolute', 'border-radius': '.9375rem' }"
 			/>
 		</el-card>
 		<el-tabs v-if="tab" v-model="itype" class="song-tabs">
@@ -54,64 +54,8 @@
 		</el-tabs>
 		<div v-else id="default-song"></div>
 		<Teleport :to="tab ? '#pane-song' : '#default-song'" defer>
-			<el-card v-for="i in 5" class="song-list">
-				<el-space
-					class="song-main"
-					wrap
-					alignment="start"
-					direction="vertical"
-					:size="[3, 0]"
-					:style="{
-						// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
-						height: ceil((dynamicCount(songzh[`song_${i}`], i) * ih) / fz) + 'rem'
-					}"
-				>
-					<template v-for="(item, index) in songzh[`song_${i}`]">
-						<div class="song-border">
-							<el-badge
-								:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
-								:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
-								:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
-								:badge-style="{
-									color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
-									fontSize: '9px',
-									borderWidth: 0
-								}"
-								:offset="[-16, 5]"
-							>
-								<el-tag
-									class="song-item"
-									disable-transitions
-									type="info"
-									:color="
-										(theme
-											? theme
-											: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') + '11'
-									"
-									@click="copySong(item)"
-									:style="{
-										'border-left': `.3125rem ${
-											// 按列序取颜色
-											(theme
-												? theme
-												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
-											'44'
-										} solid`,
-										color: theme
-											? theme
-											: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff',
-										width: iw(i) / fz + 'rem'
-									}"
-								>
-									{{ item.song }}
-								</el-tag>
-							</el-badge>
-						</div>
-					</template>
-				</el-space>
-			</el-card>
-			<template v-for="k in ['other', 'spec', 'eng']">
-				<el-card class="song-list" v-if="songzh[`song_${k}`]">
+			<template v-for="i in 5">
+				<el-card class="song-list">
 					<el-space
 						class="song-main"
 						wrap
@@ -119,18 +63,19 @@
 						direction="vertical"
 						:size="[3, 0]"
 						:style="{
-							height: (dynamicCount(songzh[`song_${k}`], 11) * ih + ih / 2) / fz + 'rem'
+							// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
+							height: ceil((dynamicCount(songzh[`song_${i}`], i) * ih) / fz) + 'rem'
 						}"
 					>
-						<template v-for="(item, index) in songzh[`song_${k}`]">
-							<div class="song-border">
+						<template v-for="(item, index) in songzh[`song_${i}`]">
+							<div class="song-border" :style="{ width: iw(i) + 'px' }">
 								<el-badge
 									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
 									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
 									:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
 									:badge-style="{
 										color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
-										fontSize: '9px',
+										fontSize: '.5625rem',
 										borderWidth: 0
 									}"
 									:offset="[-16, 5]"
@@ -142,21 +87,78 @@
 										:color="
 											(theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff') +
+												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
+											'11'
+										"
+										@click="copySong(item)"
+										:style="{
+											'border-left': `.3125rem ${
+												// 按列序取颜色
+												(theme
+													? theme
+													: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
+												'44'
+											} solid`,
+											color: theme
+												? theme
+												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff'
+										}"
+									>
+										{{ item.song }}
+									</el-tag>
+								</el-badge>
+							</div>
+						</template>
+					</el-space>
+				</el-card>
+			</template>
+			<template v-for="k in ['other', 'spec', 'eng']">
+				<el-card class="song-list" v-if="songzh[`song_${k}`]">
+					<el-space
+						class="song-main"
+						wrap
+						alignment="start"
+						direction="vertical"
+						:size="[3, 0]"
+						:style="{
+							height: (dynamicCount(songzh[`song_${k}`], more) * ih) / fz + 'rem'
+						}"
+					>
+						<template v-for="(item, index) in songzh[`song_${k}`]">
+							<div class="song-border" :style="{ width: iw(more) + 'px' }">
+								<el-badge
+									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
+									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
+									:color="(item.tag && TAG_ENUMS[item.tag].color) + '22' || '#a2d3ff'"
+									:badge-style="{
+										color: (item.tag && TAG_ENUMS[item.tag].color) || '#a2d3ff',
+										fontSize: '.5625rem',
+										borderWidth: 0
+									}"
+									:offset="[-16, 5]"
+								>
+									<el-tag
+										class="song-item"
+										disable-transitions
+										type="info"
+										:color="
+											(theme
+												? theme
+												: color[dynamicColor(index, songzh[`song_${k}`], more)] || '#a2d3ff') +
 											'11'
 										"
 										:style="{
-											'border-left': `5px ${
+											'border-left': `.3125rem ${
 												(theme
 													? theme
-													: color[dynamicColor(index, songzh[`song_${k}`], 11)] ||
+													: color[dynamicColor(index, songzh[`song_${k}`], more)] ||
 													  '#a2d3ff') + '44'
 											} solid`,
-											// 设单个歌名最大长度为11个汉字
-											'max-width': iw(11) / fz + 'rem',
+											// 设单个歌名最大长度为more个汉字
+											'max-width': iw(more) / fz + 'rem',
 											color: theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${k}`], 11)] || '#a2d3ff'
+												: color[dynamicColor(index, songzh[`song_${k}`], more)] || '#a2d3ff'
 										}"
 										@click="copySong(item)"
 									>
@@ -196,13 +198,16 @@ const color = ['#66bbf9', '#d69dff', '#ff9a8b', '#d1ac3c', '#58c147']
 const fz = ref(16)
 // 单个高（px）
 const ih = ref(36.09)
+const tih = ref(16.09)
+const more = 9
 // 宽度计算（px）
-const iw = (clen: number) => ((32 + 14.53 * min([clen < 4 ? 4 : clen, 12])!)! / 16) * fz.value
+const iw = (clen: number) => ((32 + 14.53 * min([clen < 4 ? 3.5 : clen, 12])!)! / 16) * fz.value
 // 动态颜色计算
 const dynamicColor = (index: number, arr: Song[], len: number) =>
-	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
+	(ceil((index + 1) / dynamicCount2(arr, len)) - 1) % color.length
 // 动态行个数计算
 const dynamicCount = (arr = [] as Song[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
+const dynamicCount2 = (arr = [] as Song[], len: number) => ceil(dynamicLen2(arr) / floor(wwidth.value / iw(len)))
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
@@ -212,8 +217,11 @@ const convLen = (c: string) => {
 	return l
 }
 // 长度膨胀，超过11个字符，视为两个元素
-const dynamicLen = (arr: Song[]) => arr.filter((a: Song) => convLen(a.song) > 11).length + arr.length
+const dynamicLen = (arr: Song[]) =>
+	ceil((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
 
+const dynamicLen2 = (arr: Song[]) =>
+	floor((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
 // type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
 // const TYPE_ENUMS: { [key: number]: string } = {
 // 	0: '华语',
@@ -302,7 +310,7 @@ onMounted(() => {
 	resize()
 	fz.value = +getComputedStyle(document.documentElement).getPropertyValue('font-size').replace('px', '')
 	ih.value = (ih.value / 16) * fz.value
-	console.log('🚀 ~ onMounted ~ ih:', ih.value)
+	tih.value = (tih.value / 16) * fz.value
 })
 </script>
 
