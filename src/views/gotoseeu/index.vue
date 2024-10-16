@@ -2,7 +2,7 @@
 	<SongList
 		:songs="isongs"
 		:slogan="slogan"
-		avater="tutu"
+		:avater="{ name: 'tutu' }"
 		vup="GOTOSEEU"
 		:logo="{
 			fontSize: '2.45rem'

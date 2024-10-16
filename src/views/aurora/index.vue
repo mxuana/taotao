@@ -3,7 +3,7 @@
 		:songs="isongs"
 		:spec-songs="iSpecsongs"
 		:slogan="slogan"
-		avater="tutux"
+		:avater="{ name: 'tutux' }"
 		vup="AURORA"
 		logo-cn="阿池"
 		theme="#1B4D70"

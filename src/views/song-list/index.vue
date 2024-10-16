@@ -1,5 +1,6 @@
 <template>
-	<SongList :songs="isongs" :slogan="slogan" avater="avater" vup="KUROMIA" logo-cn="库洛米娅"> </SongList>
+	<SongList :songs="isongs" :slogan="slogan" :avater="{ is: 'ElImage', img: true }" vup="KUROMIA" logo-cn="库洛米娅">
+	</SongList>
 </template>
 
 <script setup lang="ts">

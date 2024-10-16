@@ -235,12 +235,6 @@ export default [
 		tag: null
 	},
 	{
-		song: 'A thousands years',
-		type: [1],
-		singer: '',
-		tag: null
-	},
-	{
 		song: 'The climb',
 		type: [1],
 		singer: '',

@@ -10,10 +10,16 @@ export type Song = {
 	singer: string
 	row?: number
 }
-
+type Avater = {
+	name?: string
+	is?: string
+	$attr?: object
+	img?: boolean
+	src?: string
+}
 export type SongList = {
 	vup: string
-	avater?: string
+	avater?: Avater
 	slogan?: string
 	logo?: Logo
 	logoCn?: string

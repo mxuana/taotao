@@ -25,11 +25,14 @@
 				</div>
 			</div>
 			<SvgIcon
-				:name="avater"
+				:name="avater.name || ''"
+				:img="avater.img"
+				:src="avater.src || ''"
 				width="4.375rem"
 				height="4.375rem"
-				is="v-fragment"
+				:is="avater.is || 'v-fragment'"
 				:in-style="{ top: '5.5rem', position: 'absolute', 'border-radius': '.9375rem' }"
+				v-bind="avater.$attr || {}"
 			/>
 		</el-card>
 		<el-tabs v-if="tab" v-model="itype" class="song-tabs">
@@ -68,7 +71,13 @@
 						}"
 					>
 						<template v-for="(item, index) in songzh[`song_${i}`]">
-							<div class="song-border" :style="{ width: iw(i) + 'px' }">
+							<div
+								class="song-border"
+								:style="{
+									width: iw(i) + 'px',
+									height: ih + 'px'
+								}"
+							>
 								<el-badge
 									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
 									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
@@ -101,7 +110,8 @@
 											} solid`,
 											color: theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff'
+												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff',
+											fontSize: item.row == 2 ? '0.53rem' : '0.875rem'
 										}"
 									>
 										{{ item.song }}
@@ -125,7 +135,13 @@
 						}"
 					>
 						<template v-for="(item, index) in songzh[`song_${k}`]">
-							<div class="song-border" :style="{ width: iw(more) + 'px' }">
+							<div
+								class="song-border"
+								:style="{
+									width: iw(more) + 'px',
+									height: ih + 'px'
+								}"
+							>
 								<el-badge
 									:hidden="!item.tag || (item.tag && item.tag !== 3) as boolean"
 									:value="item.tag ? TAG_ENUMS[item.tag].label : ''"
@@ -158,7 +174,8 @@
 											'max-width': iw(more) / fz + 'rem',
 											color: theme
 												? theme
-												: color[dynamicColor2(index, songzh[`song_${k}`], more)] || '#a2d3ff'
+												: color[dynamicColor2(index, songzh[`song_${k}`], more)] || '#a2d3ff',
+											fontSize: item.row == 2 ? '0.66rem' : '0.875rem'
 										}"
 										@click="copySong(item)"
 									>
@@ -184,7 +201,7 @@ import type { Song, SongList } from './type'
 const props = withDefaults(defineProps<SongList>(), {
 	vip: '---',
 	slogan: '',
-	avater: '',
+	avater: () => ({}),
 	songs: () => [] as Song[],
 	specSongs: () => [],
 	logo: () => ({ fontFamily: 'BEYNO', fontSize: '2.7rem', height: '5rem' }),

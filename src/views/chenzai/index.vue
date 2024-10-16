@@ -2,7 +2,7 @@
 	<SongList
 		:songs="isongs"
 		:slogan="slogan"
-		avater="tutux"
+		:avater="{ name: 'tutux' }"
 		vup="CHENZAI"
 		logo-cn="一只晨仔"
 		theme="#4678D3"

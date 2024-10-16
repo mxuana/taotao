@@ -1,5 +1,6 @@
 <template>
-	<component :is="is">
+	<el-image v-if="img" :style="{ width, height, ...inStyle }" :src="src" fit="fill" />
+	<component v-else :is="is">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			:style="{ width, height, ...inStyle }"
@@ -20,6 +21,8 @@ type SvgIconType = {
 	is: string
 	name: string
 	inStyle: object
+	img?: boolean
+	src?: string
 }
 withDefaults(defineProps<SvgIconType>(), {
 	width: '',
@@ -27,7 +30,9 @@ withDefaults(defineProps<SvgIconType>(), {
 	color: '#333',
 	prefix: '#icon-',
 	name: '',
-	is: 'el-icon'
+	is: 'el-icon',
+	img: false,
+	src: '/kuromia.png'
 })
 </script>
 
