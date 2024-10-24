@@ -230,7 +230,7 @@ const dynamicCount2 = (arr = [] as Song[], len: number) => ceil(dynamicLen2(arr)
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
-	const matchr = c.match(/[a-zA-Z]/g) // 匹配小写长度
+	const matchr = c.match(/[a-z]/g) // 匹配小写长度
 	// 默认 - 小写长 + 小写长/2
 	matchr && (l = c.length - matchr!.length + ceil(matchr!.length / 2))
 	return l
