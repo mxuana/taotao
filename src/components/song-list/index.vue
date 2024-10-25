@@ -67,7 +67,7 @@
 						:size="[0, 0]"
 						:style="{
 							// 总个数/行可放个数=纵列可放个数向上取整 => 计算高度
-							height: ceil((dynamicCount(songzh[`song_${i}`], i) * ih) / fz) + 'rem'
+							height: ceil((dynamicCount3(songzh[`song_${i}`], i) * ih) / fz) + 'rem'
 						}"
 					>
 						<template v-for="(item, index) in songzh[`song_${i}`]">
@@ -96,7 +96,7 @@
 										:color="
 											(theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
+												: color[dynamicColor3(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
 											'11'
 										"
 										@click="copySong(item)"
@@ -105,12 +105,12 @@
 												// 按列序取颜色
 												(theme
 													? theme
-													: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff') +
-												'44'
+													: color[dynamicColor3(index, songzh[`song_${i}`], i)] ||
+													  '#a2d3ff') + '44'
 											} solid`,
 											color: theme
 												? theme
-												: color[dynamicColor(index, songzh[`song_${i}`], i)] || '#a2d3ff',
+												: color[dynamicColor3(index, songzh[`song_${i}`], i)] || '#a2d3ff',
 											fontSize: item.row == 2 ? '0.53rem' : '0.875rem'
 										}"
 									>
@@ -131,7 +131,7 @@
 						direction="vertical"
 						:size="[0, 0]"
 						:style="{
-							height: (dynamicCount2(songzh[`song_${k}`], more) * ih) / fz + 'rem'
+							height: (dynamicCount3(songzh[`song_${k}`], more) * ih) / fz + 'rem'
 						}"
 					>
 						<template v-for="(item, index) in songzh[`song_${k}`]">
@@ -160,21 +160,21 @@
 										:color="
 											(theme
 												? theme
-												: color[dynamicColor2(index, songzh[`song_${k}`], more)] || '#a2d3ff') +
+												: color[dynamicColor3(index, songzh[`song_${k}`], more)] || '#a2d3ff') +
 											'11'
 										"
 										:style="{
 											'border-left': `.3125rem ${
 												(theme
 													? theme
-													: color[dynamicColor2(index, songzh[`song_${k}`], more)] ||
+													: color[dynamicColor3(index, songzh[`song_${k}`], more)] ||
 													  '#a2d3ff') + '44'
 											} solid`,
 											// 设单个歌名最大长度为more个汉字
 											'max-width': iw(more) / fz + 'rem',
 											color: theme
 												? theme
-												: color[dynamicColor2(index, songzh[`song_${k}`], more)] || '#a2d3ff',
+												: color[dynamicColor3(index, songzh[`song_${k}`], more)] || '#a2d3ff',
 											fontSize: item.row == 2 ? '0.66rem' : '0.875rem'
 										}"
 										@click="copySong(item)"
@@ -220,13 +220,16 @@ const more = 9
 // 宽度计算（px）
 const iw = (clen: number) => ((32 + 14.53 * min([clen < 4 ? 3.5 : clen, 12])!)! / 16) * fz.value
 // 动态颜色计算
-const dynamicColor = (index: number, arr: Song[], len: number) =>
-	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
-const dynamicColor2 = (index: number, arr: Song[], len: number) =>
-	(ceil((index + 1) / dynamicCount2(arr, len)) - 1) % color.length
+// const dynamicColor = (index: number, arr: Song[], len: number) =>
+// 	(ceil((index + 1) / dynamicCount(arr, len)) - 1) % color.length
+// const dynamicColor2 = (index: number, arr: Song[], len: number) =>
+// 	(ceil((index + 1) / dynamicCount2(arr, len)) - 1) % color.length
+const dynamicColor3 = (index: number, arr: Song[], len: number) =>
+	(ceil((index + 1) / dynamicCount3(arr, len)) - 1) % color.length
 // 动态行个数计算
-const dynamicCount = (arr = [] as Song[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
-const dynamicCount2 = (arr = [] as Song[], len: number) => ceil(dynamicLen2(arr) / floor(wwidth.value / iw(len)))
+// const dynamicCount = (arr = [] as Song[], len: number) => ceil(dynamicLen(arr) / floor(wwidth.value / iw(len)))
+// const dynamicCount2 = (arr = [] as Song[], len: number) => ceil(dynamicLen2(arr) / floor(wwidth.value / iw(len)))
+const dynamicCount3 = (arr = [] as Song[], len: number) => ceil(arr.length / floor(wwidth.value / iw(len)))
 // 动态计算文本数量，一个中午为1单位，两个小写英文作1单位
 const convLen = (c: string) => {
 	let l = c.length // 默认长度
@@ -236,11 +239,11 @@ const convLen = (c: string) => {
 	return l
 }
 // 长度膨胀，超过11个字符，视为两个元素
-const dynamicLen = (arr: Song[]) =>
-	ceil((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
+// const dynamicLen = (arr: Song[]) =>
+// 	ceil((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
 
-const dynamicLen2 = (arr: Song[]) =>
-	floor((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
+// const dynamicLen2 = (arr: Song[]) =>
+// 	floor((arr.filter((a: Song) => convLen(a.song) > more).length * tih.value) / ih.value) + arr.length
 
 // type 中文 0，其他语言 1，流行 2，民谣 3，古风 4，R&B 5，Rap 6
 // const TYPE_ENUMS: { [key: number]: string } = {
