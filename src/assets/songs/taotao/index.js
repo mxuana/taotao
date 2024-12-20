@@ -224,7 +224,7 @@ export default [
 		]
 	},
 	{
-		type: '外语歌',
+		type: '听一下外语歌~',
 		songs: [
 			'Got it',
 			'Lips',
