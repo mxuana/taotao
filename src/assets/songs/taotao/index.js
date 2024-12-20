@@ -19,7 +19,6 @@ export default [
 			'红尘客栈',
 			'红颜如霜',
 			'等你下课',
-			'告白气球',
 			'手写的从前',
 			'雨下一整晚'
 		]
@@ -75,6 +74,7 @@ export default [
 		type: '偶尔听个古风～',
 		songs: [
 			'荒',
+			'谁家',
 			'芒种',
 			'赤伶',
 			'朱砂',
@@ -101,7 +101,6 @@ export default [
 			'浪人琵琶',
 			'梦回花事了',
 			'人间不值得',
-			'九九八十一',
 			'辞九门回忆',
 			'山外小楼夜听雨',
 			'天下的乌鸦一般黑'
@@ -129,6 +128,7 @@ export default [
 		songs: [
 			'他',
 			'暧',
+			'天天',
 			'不枉',
 			'嗯哼',
 			'BB88',
@@ -178,6 +178,8 @@ export default [
 			'冬眠',
 			'大眠',
 			'若把你',
+			'一格格',
+			'怪天气',
 			'猜不透',
 			'水星记',
 			'等雨停',
@@ -187,6 +189,7 @@ export default [
 			'心之火',
 			'若能再见',
 			'太聪明',
+			'我们的歌',
 			'说散就散',
 			'你啊你啊',
 			'我怀念的',
@@ -218,6 +221,24 @@ export default [
 			'烟火里的尘埃',
 			'易燃易爆炸',
 			'劈你的雷正在路上'
+		]
+	},
+	{
+		type: '外语歌',
+		songs: [
+			'Got it',
+			'Lips',
+			'Swag',
+			'Perfect',
+			'Love Story',
+			'Saturday-8bite',
+			'Magnolia',
+			'Wonderful u',
+			'Love is Gone',
+			'Here`s your perfect',
+			'Blow your mind',
+			'Fly me to the Moon',
+			'Can`t take my eyes off you'
 		]
 	}
 ]
