@@ -205,7 +205,7 @@ export default [
 		]
 	},
 	{
-		type: '其他歌曲～',
+		type: '其他歌曲丫～',
 		songs: [
 			'夸',
 			'门',
