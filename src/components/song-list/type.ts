@@ -4,11 +4,8 @@ export interface Logo {
 	height?: string
 }
 export type Song = {
-	song: string
-	type: number[]
-	tag: number | null
-	singer: string
-	row?: number
+	songs: string[]
+	type: string
 }
 type Avater = {
 	name?: string

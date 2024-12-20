@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 export const constantRoutes: RouteRecordRaw[] = [
 	{
 		path: '/',
-		redirect: '/song-list',
+		redirect: '/taotao',
 		meta: { hidden: true }
 	},
 	{
@@ -15,47 +15,11 @@ export const constantRoutes: RouteRecordRaw[] = [
 		meta: { hidden: true }
 	},
 	{
-		name: 'Home',
-		path: '/home',
-		component: () => import('@/views/home/index.vue'),
-		meta: {
-			title: '按钮',
-			icon: 'Lollipop'
-		}
-	},
-	{
 		name: 'SongList',
-		path: '/song-list',
-		component: () => import('@/views/song-list/index.vue'),
+		path: '/taotao',
+		component: () => import('@/views/taotao/index.vue'),
 		meta: {
-			title: '库洛米娅',
-			icon: 'Tickets'
-		}
-	},
-	{
-		name: 'ChenZai',
-		path: '/chenzai',
-		component: () => import('@/views/chenzai/index.vue'),
-		meta: {
-			title: '一只晨仔',
-			icon: 'Tickets'
-		}
-	},
-	{
-		name: 'GoToSeeU',
-		path: '/gotoseeu',
-		component: () => import('@/views/gotoseeu/index.vue'),
-		meta: {
-			title: '古兔希尤',
-			icon: 'Tickets'
-		}
-	},
-	{
-		name: 'Aurora',
-		path: '/aurora',
-		component: () => import('@/views/aurora/index.vue'),
-		meta: {
-			title: '阿池',
+			title: '桃桃',
 			icon: 'Tickets'
 		}
 	},
