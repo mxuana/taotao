@@ -4,7 +4,7 @@
 		:slogan="slogan"
 		:avater="{ is: 'ElImage', img: true }"
 		vup="TaoTao"
-		logo-cn="这里有个桃桃"
+		logo-cn="这里有棵桃桃"
 	>
 	</SongList>
 </template>
