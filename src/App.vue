@@ -2,7 +2,7 @@
 	<router-view />
 	<el-drawer
 		v-model="drawer"
-		title="Kuromia - 库洛米娅_"
+		title="Taotao - 这里有颗桃桃_"
 		direction="ltr"
 		class="menu-btn"
 		:size="isMob ? '80%' : '30%'"
@@ -10,7 +10,10 @@
 		:before-close="handleClose"
 	>
 		<el-menu :default-active="defaultActive" router @select="handleClose">
-			<el-menu-item v-for="route in routes.filter((r) => !r.meta.hidden)" :index="route.path">
+			<el-menu-item
+				v-for="route in routes.filter((r) => !r.meta.hidden)"
+				:index="route.path"
+			>
 				<el-icon v-if="route.meta?.icon">
 					<component :is="route.meta.icon" />
 				</el-icon>
@@ -19,7 +22,15 @@
 		</el-menu>
 	</el-drawer>
 	<div class="menu-btn" style="text-align: right">
-		<el-button type="primary" class="menu-btn" round plain @click="drawer = !drawer"> KUROMIA </el-button>
+		<el-button
+			type="primary"
+			class="menu-btn"
+			round
+			plain
+			@click="drawer = !drawer"
+		>
+			Taotao
+		</el-button>
 	</div>
 </template>
 

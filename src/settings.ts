@@ -1,5 +1,5 @@
 export default {
-	title: 'Kuromia',
+	title: 'Taotao',
 	hasLogo: true,
 	theme: 'light',
 	themeEnums: {
